@@ -1,0 +1,115 @@
+Je propose d'introduire une nouvelle structure, que nous pourrions appeler ComplexSituation, dans un fichier comme situations.ts.
+
+Nouvelle interface ComplexSituation :
+
+TypeScript
+
+export interface ComplexSituation {
+  id: string; // e.g., 'sc-01-diff-eq'
+  lessonIds: number[]; // Les leçons principales mobilisées
+  title: string;
+  
+  // Le cadre narratif du problème
+  context: string; 
+  
+  // Les données brutes, textes ou images à analyser
+  supports: {
+    type: 'text' | 'image' | 'data';
+    content: string;
+  }[];
+
+  // La liste des tâches à accomplir
+  tasks: {
+    id: number;
+    consigne: string; // La question posée pour cette tâche
+    solution: {
+      introduction: string; // "Pour accomplir cette tâche, je dois..."
+      steps: string[]; // Les étapes détaillées utilisant les verbes d'action
+      conclusion: string; // Conclusion partielle pour cette tâche
+    };
+  }[];
+
+  // La conclusion finale qui synthétise tout
+  finalConclusion: string;
+}
+Exemple Concret : Situation Complexe sur les Équations Différentielles
+Créons un exemple de situation complexe en utilisant cette nouvelle structure, inspiré par la méthodologie de votre PDF.
+
+Sujet : Croissance d'une culture bactérienne
+
+Contexte : Un laboratoire de biologie étudie la croissance d'une population de bactéries. La vitesse de croissance de la population est, à chaque instant, proportionnelle à la taille de la population.
+Support : À l'instant initial (t=0), le biologiste dénombre 1000 bactéries. Après 2 heures, il en dénombre 4000.
+Tâches :
+Déterminer le modèle mathématique (l'équation différentielle) qui régit cette croissance.
+Trouver l'expression du nombre de bactéries N(t) en fonction du temps t.
+Au bout de combien de temps la population aura-t-elle doublé par rapport à sa taille initiale ?
+Voici comment l'IA devrait structurer sa réponse, en utilisant le nouveau modèle :
+
+TypeScript
+
+// Fichier : situations.ts
+
+export const COMPLEX_SITUATIONS: ComplexSituation[] = [
+  {
+    id: 'sc-01-diff-eq',
+    lessonIds: [12, 7], // Équations différentielles, Fonctions exponentielles
+    title: "Croissance d'une culture bactérienne",
+    context: "Un laboratoire de biologie étudie la croissance d'une population de bactéries. La vitesse de croissance de la population est, à chaque instant, proportionnelle à la taille de la population.",
+    supports: [
+      { type: 'data', content: "Population initiale (t=0) : N(0) = 1000 bactéries." },
+      { type: 'data', content: "Population à t=2 heures : N(2) = 4000 bactéries." }
+    ],
+    tasks: [
+      {
+        id: 1,
+        consigne: "Déterminer le modèle mathématique qui régit cette croissance.",
+        solution: {
+          introduction: "Je traduis les informations du contexte en langage mathématique pour établir une équation différentielle.",
+          steps: [
+            "La vitesse de croissance est la dérivée N'(t).",
+            "L'énoncé dit que N'(t) est proportionnelle à N(t).",
+            "J'écris donc l'équation : N'(t) = k * N(t), où k est une constante de proportionnalité réelle positive, car il s'agit d'une croissance."
+          ],
+          conclusion: "Le modèle mathématique est une équation différentielle de la forme y' = ky."
+        }
+      },
+      {
+        id: 2,
+        consigne: "Trouver l'expression du nombre de bactéries N(t) en fonction du temps t.",
+        solution: {
+          introduction: "Je vais résoudre l'équation différentielle trouvée et utiliser les données du support pour déterminer les constantes.",
+          steps: [
+            "Je sais que la solution générale de N'(t) = kN(t) est de la forme N(t) = C * e^(kt), où C est une constante réelle.",
+            "J'utilise la condition initiale N(0) = 1000 : 1000 = C * e^(k*0) => 1000 = C * 1 => C = 1000.",
+            "L'expression devient donc N(t) = 1000 * e^(kt).",
+            "J'utilise la deuxième condition N(2) = 4000 : 4000 = 1000 * e^(k*2) => 4 = e^(2k).",
+            "J'applique la fonction logarithme népérien : ln(4) = ln(e^(2k)) => ln(4) = 2k.",
+            "Je déduis la valeur de k : k = ln(4) / 2 = 2ln(2) / 2 = ln(2).",
+            "Je remplace les constantes C et k dans l'expression générale."
+          ],
+          conclusion: "L'expression du nombre de bactéries en fonction du temps est N(t) = 1000 * e^(t * ln(2))."
+        }
+      },
+      {
+        id: 3,
+        consigne: "Au bout de combien de temps la population aura-t-elle doublé par rapport à sa taille initiale ?",
+        solution: {
+          introduction: "Je cherche l'instant 't' pour lequel N(t) sera égal au double de la population initiale, soit 2 * 1000 = 2000 bactéries.",
+          steps: [
+            "Je pose l'équation à résoudre : 2000 = 1000 * e^(t * ln(2)).",
+            "Je simplifie l'équation : 2 = e^(t * ln(2)).",
+            "J'applique la fonction logarithme népérien : ln(2) = ln(e^(t * ln(2))) => ln(2) = t * ln(2).",
+            "Je résous pour t : t = ln(2) / ln(2) = 1."
+          ],
+          conclusion: "Le temps nécessaire pour que la population double est de 1 heure."
+        }
+      }
+    ],
+    finalConclusion: "En modélisant la situation par une équation différentielle, nous avons déterminé que la population de bactéries suit la loi N(t) = 1000 * e^(t * ln(2)). Cette population double toutes les heures."
+  }
+];
+En adoptant cette nouvelle structure, l'IA sera capable de :
+
+Stocker des problèmes plus complexes et narratifs.
+Générer des solutions détaillées qui respectent la méthodologie APC.
+Guider l'élève pas à pas, tâche par tâche, en imitant la démarche d'un professeur qui résout un problème au tableau.

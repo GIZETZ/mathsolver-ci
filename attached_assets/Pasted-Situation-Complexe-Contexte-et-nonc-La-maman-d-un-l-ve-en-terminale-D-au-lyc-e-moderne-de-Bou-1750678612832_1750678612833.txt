@@ -1,0 +1,65 @@
+Situation Complexe
+Contexte et énoncé
+La maman d’un élève en terminale D au 
+lycée moderne de Bouaflé désire une relance  
+publicitaire auprès de ses meilleurs clients. 
+Elle fait donc imprimer des dépliants qui lui 
+coûtent 4 000 FCFA en frais fixes plus 100 
+FCFA par dépliant à l’exception de 20 copies 
+qui ne seront pas distribuées. Elle est sure que 
+chaque dépliant sera lu par 20 personnes. 
+La commerçante voudrait déterminer le coût 
+d'un dépliant par client pour une production 
+de dépliants à long terme.
+ Détermine ce coût pour la maman.
+
+Leçon
+Fonctions Logarithmes
+
+Résolu le
+23/06/2025
+
+1
+Tâche 1
+Déterminer le coût total de production des dépliants.
+
+Introduction
+Pour accomplir cette tâche, je dois déterminer le coût total de production des dépliants en prenant en compte les frais fixes et le coût variable par dépliant.
+
+Étapes de résolution
+Je calcule le coût fixe : 4000 FCFA.
+Je calcule le coût variable pour 20 dépliants : 100 FCFA × 20 = 2000 FCFA.
+Je détermine le coût total de production : Coût total = Coût fixe + Coût variable = 4000 FCFA + 2000 FCFA = 6000 FCFA.
+Conclusion
+Le coût total de production des dépliants est de 6000 FCFA.
+
+2
+Tâche 2
+Calculer le nombre de dépliants distribués.
+
+Introduction
+Pour accomplir cette tâche, je dois déterminer le nombre de dépliants qui seront effectivement distribués aux clients.
+
+Étapes de résolution
+Je sais que 20 dépliants ne seront pas distribués.
+Je détermine le nombre total de dépliants produits : 20 dépliants + 20 dépliants non distribués = 40 dépliants.
+Je calcule le nombre de dépliants distribués : 40 dépliants - 20 dépliants non distribués = 20 dépliants.
+Conclusion
+Le nombre de dépliants distribués est de 20 dépliants.
+
+3
+Tâche 3
+Déterminer le coût par client.
+
+Introduction
+Pour accomplir cette tâche, je dois calculer le coût par client en tenant compte du nombre de dépliants distribués et du nombre de personnes qui les liront.
+
+Étapes de résolution
+Je sais que chaque dépliant sera lu par 20 personnes.
+Je détermine le nombre total de clients atteints : 20 dépliants × 20 personnes par dépliant = 400 personnes.
+Je calcule le coût par client : Coût total = 6000 FCFA / 400 clients = 15 FCFA par client.
+Conclusion
+Le coût par client pour la maman est de 15 FCFA.
+
+Conclusion générale
+En synthèse, après avoir calculé le coût total de production, le nombre de dépliants distribués, et le coût par client, nous avons déterminé que le coût par client est de 15 FCFA.

@@ -1,0 +1,196 @@
+# CAHIER DES CHARGES
+## Application Mobile de Résolution de Situations Complexes en Mathématiques
+### Système Éducatif Ivoirien - Terminale D
+
+---
+
+## 1. CONTEXTE ET OBJECTIFS
+
+### 1.1 Contexte
+Le système éducatif ivoirien utilise des **situations complexes** au second cycle pour évaluer les compétences mathématiques des élèves de Terminale D. Ces situations, conformes aux exigences du BAC UEMOA, nécessitent une approche méthodologique structurée.
+
+### 1.2 Objectif Principal
+Développer une application mobile avec Expo qui aide les élèves de Terminale D en Côte d'Ivoire à résoudre les situations complexes mathématiques en utilisant l'intelligence artificielle.
+
+### 1.3 Objectifs Spécifiques
+- Fournir un assistant IA pour la résolution structurée des situations complexes
+- Proposer une méthodologie de résolution claire (Introduction, Développement, Conclusion)
+- Couvrir les 12 leçons du programme de Terminale D
+- Offrir un système d'évaluation basé sur les critères officiels
+- Permettre l'apprentissage autonome et l'entraînement
+
+---
+
+## 2. SPÉCIFICATIONS FONCTIONNELLES
+
+### 2.1 Fonctionnalités Principales
+
+#### 2.1.1 Module de Résolution IA
+- **Analyse automatique des situations complexes**
+  - Identification du contexte, supports, fonctions et consignes
+  - Reconnaissance des domaines mathématiques concernés
+  - Proposition d'outils mathématiques appropriés
+
+#### 2.1.2 Guide Méthodologique
+- **Structure de résolution imposée :**
+  - Introduction : Identification des outils et étapes
+  - Développement : Application des connaissances mathématiques
+  - Conclusion : Retour au problème et réponse argumentée
+
+#### 2.1.3 Couverture Curriculaire
+**12 Leçons du programme :**
+1. Limites et Continuité
+2. Probabilités
+3. Dérivabilité et Étude de Fonctions
+4. Primitives
+5. Fonctions Logarithmes
+6. Nombres Complexes
+7. Fonctions Exponentielles et Fonctions Puissances
+8. Nombres Complexes et Géométrie du Plan
+9. Suites Numériques
+10. Calcul Intégral
+11. Statistique à Deux Variables
+12. Équations Différentielles
+
+#### 2.1.4 Système d'Évaluation
+**Critères de notation basés sur le barème officiel :**
+- CM1 : Pertinence (0,75 points)
+- CM2 : Utilisation correcte des outils mathématiques (2,5 points)
+- CM3 : Cohérence de la réponse (1,25 points)
+- CP : Critère de perfectionnement (0,5 points)
+
+### 2.2 Fonctionnalités Secondaires
+- Bibliothèque de situations complexes types
+- Historique des résolutions précédentes
+- Mode d'entraînement avec feedback
+- Système de progression personnalisé
+
+---
+
+## 3. SPÉCIFICATIONS TECHNIQUES
+
+### 3.1 Technologies Imposées
+- **Framework :** Expo (React Native)
+- **IA :** API fournie (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)
+- **Plateforme :** Mobile (iOS/Android)
+
+### 3.2 Architecture Technique
+```
+Application Mobile (Expo)
+├── Interface Utilisateur (React Native)
+├── Gestionnaire d'État (Context API/Redux)
+├── Module de Communication API
+├── Base de Données Locale (SQLite/AsyncStorage)
+└── Système de Notification
+```
+
+### 3.3 Intégration API IA
+- **Endpoint de l'API :** À déterminer selon le fournisseur
+- **Authentification :** Clé API fournie
+- **Format des requêtes :** JSON
+- **Gestion des erreurs :** Système de fallback et retry
+
+---
+
+## 4. SPÉCIFICATIONS ERGONOMIQUES
+
+### 4.1 Interface Utilisateur
+- **Design adapté au contexte éducatif ivoirien**
+- **Navigation intuitive pour des élèves de 17-19 ans**
+- **Accessibilité :** Support des langues française
+- **Responsive :** Adaptation aux différentes tailles d'écran
+
+### 4.2 Expérience Utilisateur
+- **Workflow de résolution guidé**
+- **Feedback immédiat sur la qualité des réponses**
+- **Système de progression visible**
+- **Mode hors ligne pour les bases**
+
+---
+
+## 5. CONTRAINTES ET EXIGENCES
+
+### 5.1 Contraintes Pédagogiques
+- **Respect strict de la méthodologie officielle**
+- **Conformité au programme de Terminale D**
+- **Alignement avec les critères d'évaluation UEMOA**
+
+### 5.2 Contraintes Techniques
+- **Performance :** Temps de réponse < 10 secondes
+- **Compatibilité :** iOS 12+ et Android 8+
+- **Sécurité :** Protection de la clé API
+- **Stockage :** Optimisation pour les appareils à capacité limitée
+
+### 5.3 Contraintes Contextuelles
+- **Adaptation au contexte ivoirien**
+- **Support des connexions internet limitées**
+- **Compatibilité avec les appareils d'entrée de gamme**
+
+---
+
+## 6. LIVRABLES ATTENDUS
+
+### 6.1 Application
+- Code source complet avec documentation
+- Build pour iOS et Android
+- Guide d'installation et de déploiement
+
+### 6.2 Documentation
+- Documentation technique complète
+- Guide utilisateur
+- Documentation de l'API
+- Tests unitaires et d'intégration
+
+### 6.3 Formation
+- Guide de formation pour les enseignants
+- Tutoriels vidéo pour les élèves
+- FAQ et support technique
+
+---
+
+## 7. PLANNING ET BUDGET
+
+### 7.1 Phases de Développement
+1. **Phase 1 :** Analyse et conception (2 semaines)
+2. **Phase 2 :** Développement MVP (6 semaines)
+3. **Phase 3 :** Tests et optimisation (2 semaines)
+4. **Phase 4 :** Déploiement et formation (1 semaine)
+
+### 7.2 Ressources Nécessaires
+- 1 Chef de projet
+- 2 Développeurs Expo/React Native
+- 1 Expert pédagogique mathématiques
+- 1 Designer UX/UI
+- 1 Testeur QA
+
+---
+
+## 8. CRITÈRES DE SUCCÈS
+
+### 8.1 Indicateurs Quantitatifs
+- Taux d'adoption par les élèves > 70%
+- Amélioration des notes en situations complexes > 15%
+- Temps de résolution réduit de 30%
+
+### 8.2 Indicateurs Qualitatifs
+- Satisfaction utilisateur > 4/5
+- Adoption par les enseignants
+- Conformité pédagogique validée par le ministère
+
+---
+
+## 9. RISQUES ET MITIGATION
+
+### 9.1 Risques Identifiés
+- **Technique :** Limitations de l'API IA
+- **Pédagogique :** Non-conformité aux standards
+- **Adoption :** Résistance au changement
+
+### 9.2 Stratégies de Mitigation
+- Tests approfondis de l'API
+- Validation continue avec experts pédagogiques
+- Programme de formation et d'accompagnement
+
+---
+
+*Ce cahier des charges est évolutif et sera mis à jour selon les retours des parties prenantes.*

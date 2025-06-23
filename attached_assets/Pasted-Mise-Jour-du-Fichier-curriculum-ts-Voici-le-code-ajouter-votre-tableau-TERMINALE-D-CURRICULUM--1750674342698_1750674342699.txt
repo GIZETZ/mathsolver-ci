@@ -1,0 +1,337 @@
+Mise à Jour du Fichier curriculum.ts
+Voici le code à ajouter à votre tableau TERMINALE_D_CURRICULUM. Il définit le périmètre de chaque leçon, y compris les notions interdites pour éviter tout dépassement du programme.
+
+TypeScript
+
+// AJOUTS POUR LES LEÇONS 6 À 12
+{
+    id: 6,
+    name: "Nombres Complexes (Partie 1 : Forme Algébrique)",
+    description: "Introduction à l'ensemble des nombres complexes, à leur forme algébrique, et aux opérations arithmétiques de base.",
+    objectives: [
+      "Identifier la partie réelle et la partie imaginaire d'un nombre complexe",
+      "Effectuer des calculs dans l'ensemble C (addition, soustraction, multiplication, division)",
+      "Calculer le conjugué d'un nombre complexe",
+      "Résoudre des équations du second degré dans C à coefficients réels"
+    ],
+    notions: [
+      "Ensemble C et nombre i tel que i² = -1",
+      "Forme algébrique a + ib",
+      "Partie réelle Re(z) et partie imaginaire Im(z)",
+      "Conjugué d'un nombre complexe",
+      "Opérations arithmétiques dans C",
+      "Résolution de l'équation az² + bz + c = 0 avec a, b, c réels"
+    ],
+    methods: [
+      "Calcul direct pour somme, différence, produit",
+      "Utilisation de l'expression conjuguée pour le quotient",
+      "Calcul du discriminant Δ pour les équations du second degré"
+    ],
+    typicalExercises: [
+      "Mettre Z = (2-i)/(3+2i) sous forme algébrique",
+      "Résoudre dans C l'équation z² - 2z + 5 = 0"
+    ],
+    forbiddenTopics: [
+      "Forme trigonométrique et exponentielle",
+      "Argument et module (introduits dans la leçon suivante)",
+      "Racines n-ièmes d'un nombre complexe",
+      "Transformations géométriques complexes (similitudes, etc.)"
+    ],
+    evaluationCriteria: {
+      cm1: ["Identification correcte des notions à utiliser (conjugué, discriminant)"],
+      cm2: ["Maîtrise des techniques de calcul dans C", "Application correcte des formules de résolution"],
+      cm3: ["Structuration du raisonnement (e.g., calcul de Δ puis des racines)"],
+      cp: ["Présentation claire du résultat final sous la forme a+ib"]
+    }
+  },
+  {
+    id: 7,
+    name: "Fonctions Exponentielles",
+    description: "Étude de la fonction exponentielle népérienne, de ses propriétés algébriques et de sa dérivée.",
+    objectives: [
+      "Connaître la définition et les propriétés de la fonction exp(x)",
+      "Calculer la dérivée de fonctions composées avec l'exponentielle",
+      "Résoudre des équations et inéquations avec l'exponentielle",
+      "Étudier les limites de référence de la fonction exponentielle"
+    ],
+    notions: [
+      "Fonction exponentielle comme bijection réciproque de la fonction ln(x)",
+      "Propriétés algébriques : exp(a+b), exp(a-b), exp(-a), exp(na)",
+      "Dérivée de exp(x) et de exp(u(x))",
+      "Limites aux bornes de l'ensemble de définition",
+      "Croissance comparée (limites en +∞ de exp(x)/x)"
+    ],
+    methods: [
+      "Application des propriétés algébriques pour simplifier des expressions",
+      "Utilisation du changement de variable X = exp(x) pour résoudre des équations",
+      "Étude de signe de l'exponentielle (toujours positive)"
+    ],
+    typicalExercises: [
+      "Résoudre l'équation e^(2x) - 3e^x + 2 = 0",
+      "Calculer la dérivée de f(x) = (x+1)e^(-x)",
+      "Étudier les limites d'une fonction faisant intervenir l'exponentielle"
+    ],
+    forbiddenTopics: [
+      "Fonctions exponentielles de base a (a≠e)",
+      "Fonctions hyperboliques (sinh, cosh)"
+    ],
+    evaluationCriteria: {
+      cm1: ["Reconnaissance du type d'équation ou de la forme de la fonction à dériver"],
+      cm2: ["Application correcte des propriétés algébriques et des formules de dérivation"],
+      cm3: ["Justification des étapes de résolution (changement de variable, tableau de signe)"],
+      cp: ["Rigueur dans la manipulation des exposants et la simplification"]
+    }
+  },
+  {
+    id: 8,
+    name: "Nombres Complexes et Géométrie",
+    description: "Interprétation géométrique des nombres complexes.",
+    objectives: [
+      "Représenter un nombre complexe par un point ou un vecteur dans le plan",
+      "Déterminer le module et un argument d'un nombre complexe",
+      "Utiliser les nombres complexes pour caractériser des configurations géométriques"
+    ],
+    notions: [
+      "Affixe d'un point, affixe d'un vecteur",
+      "Module d'un nombre complexe |z|",
+      "Argument d'un nombre complexe non nul arg(z)",
+      "Formes trigonométrique et exponentielle",
+      "Interprétation géométrique de |z' - z| et arg((z' - z)/(z'' - z))"
+    ],
+    methods: [
+      "Calcul de module avec la formule |a+ib| = sqrt(a²+b²)",
+      "Calcul d'argument avec cos(θ) et sin(θ)",
+      "Utilisation des propriétés des modules et arguments (produit, quotient)"
+    ],
+    typicalExercises: [
+      "Déterminer le module et un argument de z = 1 + i√3",
+      "Déterminer la nature du triangle ABC connaissant les affixes de A, B, C"
+    ],
+    forbiddenTopics: [
+      "Transformations complexes avancées (similitudes directes/indirectes)",
+      "Formule de Moivre et applications à la trigonométrie"
+    ],
+    evaluationCriteria: {
+      cm1: ["Association correcte entre notions complexes (module, argument) et notions géométriques (distance, angle)"],
+      cm2: ["Exactitude des calculs de module et d'argument"],
+      cm3: ["Enchaînement logique des déductions pour prouver une propriété géométrique"],
+      cp: ["Qualité de la figure géométrique si demandée"]
+    }
+  },
+  {
+    id: 9,
+    name: "Suites Numériques",
+    description: "Étude des suites arithmétiques, géométriques et de leur convergence.",
+    objectives: [
+      "Identifier la nature d'une suite (arithmétique, géométrique)",
+      "Calculer le terme général et la somme des termes d'une suite",
+      "Déterminer la limite d'une suite numérique",
+      "Utiliser le raisonnement par récurrence pour démontrer une propriété"
+    ],
+    notions: [
+      "Suites arithmétiques : raison, terme général, somme",
+      "Suites géométriques : raison, terme général, somme",
+      "Sens de variation d'une suite",
+      "Convergence et divergence d'une suite",
+      "Limites de référence (suites géométriques, etc.)",
+      "Principe du raisonnement par récurrence"
+    ],
+    methods: [
+      "Calcul de U(n+1) - U(n) ou U(n+1)/U(n) pour étudier la nature et la monotonie",
+      "Utilisation des formules du terme général et de la somme",
+      "Théorèmes de convergence (suites monotones et majorées/minorées)"
+    ],
+    typicalExercises: [
+      "Démontrer par récurrence qu'une suite est majorée",
+      "Étudier la convergence d'une suite arithmético-géométrique"
+    ],
+    forbiddenTopics: [
+      "Suites adjacentes",
+      "Théorèmes de comparaison complexes",
+      "Séries numériques"
+    ],
+    evaluationCriteria: {
+      cm1: ["Identification correcte de la nature de la suite et de la méthode d'étude (récurrence, calcul direct)"],
+      cm2: ["Application correcte des formules de suites et des théorèmes de convergence"],
+      cm3: ["Rigueur du raisonnement par récurrence (initialisation, hérédité, conclusion)"],
+      cp: ["Clarté dans la justification de la convergence et le calcul de la limite"]
+    }
+  },
+  {
+    id: 10,
+    name: "Calcul Intégral",
+    description: "Introduction au calcul de primitives et à l'intégrale définie pour le calcul d'aires.",
+    objectives: [
+      "Déterminer une primitive d'une fonction usuelle",
+      "Utiliser les propriétés de l'intégrale (linéarité, relation de Chasles)",
+      "Calculer l'intégrale définie d'une fonction continue sur un intervalle",
+      "Calculer l'aire d'un domaine délimité par des courbes"
+    ],
+    notions: [
+      "Notion de primitive",
+      "Primitives des fonctions de référence",
+      "Intégrale de a à b d'une fonction continue f : F(b) - F(a)",
+      "Propriétés de l'intégrale",
+      "Valeur moyenne d'une fonction",
+      "Aire sous la courbe (pour une fonction positive)"
+    ],
+    methods: [
+      "Lecture inverse du tableau des dérivées pour trouver des primitives",
+      "Identification des formes u'u^n, u'/u, u'e^u",
+      "Calcul d'aire par la différence de deux intégrales"
+    ],
+    typicalExercises: [
+      "Calculer l'intégrale de 0 à 1 de f(x) = xe^(x²)",
+      "Calculer l'aire du domaine délimité par les courbes de y=x² et y=√x"
+    ],
+    forbiddenTopics: [
+      "Intégration par parties",
+      "Changement de variable",
+      "Intégrales impropres (bornes infinies)"
+    ],
+    evaluationCriteria: {
+      cm1: ["Identification de la bonne primitive ou de la bonne intégrale à calculer"],
+      cm2: ["Maîtrise du calcul des primitives et des intégrales définies"],
+      cm3: ["Justification de la démarche pour le calcul d'aire (position relative des courbes)"],
+      cp: ["Utilisation correcte des notations d'intégrale et de primitive"]
+    }
+  },
+  {
+    id: 11,
+    name: "Statistique à Deux Variables",
+    description: "Analyse de la relation entre deux variables statistiques.",
+    objectives: [
+      "Représenter un nuage de points",
+      "Calculer les coordonnées du point moyen G",
+      "Déterminer l'équation de la droite d'ajustement par la méthode des moindres carrés",
+      "Calculer le coefficient de corrélation linéaire et l'interpréter",
+      "Effectuer des prévisions à l'aide de l'ajustement affine"
+    ],
+    notions: [
+      "Série statistique double (xi, yi)",
+      "Nuage de points, point moyen G(x̄, ȳ)",
+      "Covariance Cov(X, Y)",
+      "Droite de régression de y en x",
+      "Coefficient de corrélation linéaire r",
+      "Ajustement affine"
+    ],
+    methods: [
+      "Calcul des moyennes, variances, covariance",
+      "Application des formules pour la droite des moindres carrés (y = ax + b)",
+      "Application de la formule du coefficient de corrélation"
+    ],
+    typicalExercises: [
+      "Ajuster un nuage de points par la droite des moindres carrés et faire une estimation"
+    ],
+    forbiddenTopics: [
+      "Ajustements non linéaires (exponentiel, puissance)",
+      "Intervalle de confiance",
+      "Tests d'hypothèses"
+    ],
+    evaluationCriteria: {
+      cm1: ["Choix pertinent de l'ajustement affine au vu du nuage de points"],
+      cm2: ["Exactitude des calculs statistiques (moyennes, covariance, r, a, b)"],
+      cm3: ["Cohérence de l'interprétation du coefficient de corrélation et de l'estimation"],
+      cp: ["Qualité du graphique (nuage de points et droite d'ajustement)"]
+    }
+  },
+  {
+    id: 12,
+    name: "Équations Différentielles",
+    description: "Résolution d'équations différentielles linéaires du premier ordre.",
+    objectives: [
+      "Résoudre l'équation différentielle y' = ay",
+      "Résoudre l'équation différentielle y' = ay + b",
+      "Trouver une solution particulière vérifiant une condition initiale"
+    ],
+    notions: [
+      "Équation différentielle",
+      "Solution générale, solution particulière",
+      "Condition initiale"
+    ],
+    methods: [
+      "Application des formules de solutions générales (y(x) = Ce^(ax) et y(x) = Ce^(ax) - b/a)",
+      "Détermination de la constante C à l'aide de la condition initiale"
+    ],
+    typicalExercises: [
+      "Résoudre y' + 2y = 0 avec y(0) = 3",
+      "Trouver la solution de y' = 3y + 5 qui s'annule en x=1"
+    ],
+    forbiddenTopics: [
+      "Équations différentielles du second ordre",
+      "Équations avec second membre non constant (sauf y' = ay + f(x) où une solution particulière est donnée)",
+      "Méthode de variation de la constante"
+    ],
+    evaluationCriteria: {
+      cm1: ["Identification correcte du type d'équation différentielle"],
+      cm2: ["Application correcte des formules de résolution"],
+      cm3: ["Démarche claire pour trouver la solution particulière avec la condition initiale"],
+      cp: ["Rigueur dans la notation et la présentation de la solution finale"]
+    }
+  }
+Mise à Jour du Fichier examples.ts
+Voici des exemples concrets pour certaines des nouvelles leçons, respectant la structure UEMOA (introduction, développement, conclusion) et incluant les erreurs communes et points clés. Vous pouvez les ajouter au tableau EXERCISE_EXAMPLES.
+
+TypeScript
+
+// AJOUTS D'EXEMPLES POUR LES NOUVELLES LEÇONS
+{
+    lessonId: 6, // Nombres Complexes (Partie 1)
+    title: "Résolution d'équation du second degré dans C",
+    statement: "Résoudre dans l'ensemble des nombres complexes C l'équation (E) : z² - 6z + 13 = 0.",
+    expectedSolution: {
+      introduction: "Il s'agit d'une équation du second degré à coefficients réels (a=1, b=-6, c=13). On calcule le discriminant Δ pour déterminer la nature des racines.",
+      development: "Δ = b² - 4ac = (-6)² - 4(1)(13) = 36 - 52 = -16. \nComme Δ < 0, l'équation admet deux solutions complexes conjuguées. On a Δ = 16i² = (4i)². \nLes solutions sont z₁ = (-b - i√(-Δ)) / 2a et z₂ = (-b + i√(-Δ)) / 2a. \nz₁ = (6 - 4i) / 2 = 3 - 2i. \nz₂ = (6 + 4i) / 2 = 3 + 2i.",
+      conclusion: "L'ensemble des solutions de l'équation (E) dans C est S = {3 - 2i; 3 + 2i}."
+    },
+    commonErrors: [
+      "S'arrêter en disant 'pas de solution' quand Δ < 0",
+      "Erreur de calcul dans la racine de -Δ",
+      "Oublier de diviser par 2a"
+    ],
+    keyPoints: [
+      "Calcul du discriminant Δ",
+      "Interprétation du signe de Δ dans C",
+      "Application des formules des racines complexes"
+    ]
+  },
+  {
+    lessonId: 7, // Fonctions Exponentielles
+    title: "Résolution d'équation avec exponentielle",
+    statement: "Résoudre dans R l'équation (E) : e^(2x) - 2e^x - 3 = 0.",
+    expectedSolution: {
+      introduction: "Cette équation peut se ramener à une équation du second degré en posant un changement de variable. On pose X = e^x.",
+      development: "Puisque e^(2x) = (e^x)², l'équation devient : X² - 2X - 3 = 0. C'est une équation du second degré en X. \nOn calcule le discriminant : Δ = (-2)² - 4(1)(-3) = 4 + 12 = 16. \nLes solutions en X sont X₁ = (2 - √16) / 2 = -1 et X₂ = (2 + √16) / 2 = 3. \nOn revient à la variable x : \n1) e^x = X₁ = -1. Cette équation n'a pas de solution car e^x > 0 pour tout x réel. \n2) e^x = X₂ = 3. En appliquant la fonction logarithme népérien, on obtient x = ln(3).",
+      conclusion: "L'ensemble solution de l'équation (E) est S = {ln(3)}."
+    },
+    commonErrors: [
+      "Oublier que e^x est strictement positif",
+      "Donner X₁ et X₂ comme solutions finales",
+      "Faire une erreur dans le changement de variable (e.g. e^(2x) = 2X)"
+    ],
+    keyPoints: [
+      "Reconnaître une forme polynomiale",
+      "Poser le changement de variable X = e^x",
+      "Vérifier la validité des solutions pour X (doit être > 0)"
+    ]
+  },
+  {
+    lessonId: 10, // Calcul Intégral
+    title: "Calcul d'aire entre deux courbes",
+    statement: "Calculer, en unités d'aire, l'aire A du domaine délimité par les courbes des fonctions f(x) = -x² + 2x et g(x) = x sur l'intervalle [0, 1].",
+    expectedSolution: {
+      introduction: "Pour calculer l'aire entre deux courbes, on doit d'abord étudier la position relative des courbes sur l'intervalle considéré, puis intégrer la différence f(x) - g(x) (ou g(x) - f(x)) pour s'assurer d'avoir une valeur positive.",
+      development: "Étudions le signe de d(x) = f(x) - g(x) = (-x² + 2x) - x = -x² + x = x(1-x). \nSur l'intervalle [0, 1], x ≥ 0 et (1-x) ≥ 0, donc d(x) ≥ 0. La courbe de f est au-dessus de celle de g. \nL'aire est donc A = ∫[0,1] (f(x) - g(x)) dx = ∫[0,1] (-x² + x) dx. \nUne primitive de -x² + x est F(x) = -x³/3 + x²/2. \nA = [F(x)] de 0 à 1 = F(1) - F(0) = (-1/3 + 1/2) - (0) = -2/6 + 3/6 = 1/6.",
+      conclusion: "L'aire du domaine est de 1/6 unité d'aire."
+    },
+    commonErrors: [
+      "Ne pas étudier la position relative et intégrer f(x)+g(x) ou une différence incorrecte",
+      "Faire une erreur dans le calcul de la primitive",
+      "Erreur dans l'évaluation de la primitive aux bornes"
+    ],
+    keyPoints: [
+      "Étude de la position relative des courbes (signe de la différence)",
+      "Formule de l'aire entre deux courbes : ∫[a,b] |f(x)-g(x)| dx",
+      "Calcul de primitive et évaluation de l'intégrale définie"
+    ]
+  }

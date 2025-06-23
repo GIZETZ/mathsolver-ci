@@ -1,0 +1,357 @@
+# FICHE DE PROJET
+## MathResolver CI - Assistant IA pour Situations Complexes
+
+---
+
+## 📋 INFORMATIONS GÉNÉRALES
+
+| **Nom du Projet** | MathResolver CI |
+|-------------------|-----------------|
+| **Version** | 1.0.0 |
+| **Type** | Application Mobile Éducative |
+| **Plateforme** | iOS / Android (Expo) |
+| **Public Cible** | Élèves Terminale D - Côte d'Ivoire |
+| **Durée Estimée** | 11 semaines |
+| **Budget Estimé** | À déterminer |
+
+---
+
+## 🎯 RÉSUMÉ EXÉCUTIF
+
+**MathResolver CI** est une application mobile développée avec Expo qui utilise l'intelligence artificielle pour aider les élèves de Terminale D en Côte d'Ivoire à résoudre les situations complexes mathématiques selon la méthodologie officielle du système éducatif UEMOA.
+
+### Valeur Ajoutée
+- **Assistance IA personnalisée** pour la résolution de problèmes complexes
+- **Méthodologie structurée** conforme aux standards officiels
+- **Couverture complète** des 12 leçons du programme
+- **Évaluation automatisée** selon les critères officiels
+
+---
+
+## 🏗️ ARCHITECTURE TECHNIQUE
+
+### Stack Technologique
+```
+Frontend Mobile
+├── React Native (Expo SDK 49+)
+├── TypeScript
+├── Expo Router
+├── React Hook Form
+├── Async Storage
+└── Expo SQLite
+
+Backend & Services
+├── API IA (Clé fournie)
+├── RESTful API Communication
+├── Local Data Management
+└── Offline Capability
+
+UI/UX
+├── Expo UI Components
+├── React Native Elements
+├── Styled Components
+└── Responsive Design
+```
+
+### Modules Principaux
+
+#### 1. Module d'Authentification
+```typescript
+interface User {
+  id: string;
+  name: string;
+  class: string;
+  school: string;
+  progress: UserProgress;
+}
+```
+
+#### 2. Module de Résolution IA
+```typescript
+interface SituationComplexe {
+  id: string;
+  lecon: LessonType;
+  contexte: string;
+  supports: string[];
+  fonctions: string[];
+  consignes: string[];
+}
+
+interface Resolution {
+  introduction: string;
+  developpement: string;
+  conclusion: string;
+  outils: string[];
+  etapes: string[];
+}
+```
+
+#### 3. Module d'Évaluation
+```typescript
+interface Evaluation {
+  cm1_pertinence: number; // 0.75 max
+  cm2_outils_math: number; // 2.5 max
+  cm3_coherence: number; // 1.25 max
+  cp_perfectionnement: number; // 0.5 max
+  total: number; // 5 max
+  feedback: string[];
+}
+```
+
+---
+
+## 📱 FONCTIONNALITÉS DÉTAILLÉES
+
+### 🔧 Fonctionnalités Core
+
+#### 1. Assistant de Résolution IA
+- **Analyse de contexte** : Parsing automatique des situations
+- **Identification des outils** : Suggestion des méthodes mathématiques
+- **Guide étape par étape** : Accompagnement dans la résolution
+- **Vérification** : Validation de la cohérence des réponses
+
+#### 2. Bibliothèque de Situations
+```
+Leçons Couvertes:
+├── 01. Limites et Continuité
+├── 02. Probabilités
+├── 03. Dérivabilité et Étude de Fonctions  
+├── 04. Primitives
+├── 05. Fonctions Logarithmes
+├── 06. Nombres Complexes
+├── 07. Fonctions Exponentielles et Puissances
+├── 08. Nombres Complexes et Géométrie
+├── 09. Suites Numériques
+├── 10. Calcul Intégral
+├── 11. Statistique à Deux Variables
+└── 12. Équations Différentielles
+```
+
+#### 3. Système d'Évaluation Automatisé
+- **Critères officiels** : Notation selon le barème UEMOA
+- **Feedback détaillé** : Explication des points perdus
+- **Progression tracking** : Suivi des performances
+
+### 🎨 Fonctionnalités Avancées
+
+#### 1. Mode Entraînement
+- **Génération de situations** similaires
+- **Difficultés progressive** adaptée au niveau
+- **Simulation d'examen** avec contraintes de temps
+
+#### 2. Tableau de Bord Personnel
+- **Statistiques de performance** par leçon
+- **Graphiques de progression** temporelle
+- **Recommandations personnalisées** d'amélioration
+
+#### 3. Mode Collaboratif
+- **Partage de solutions** entre élèves
+- **Discussions** sur les méthodes
+- **Classements** par établissement
+
+---
+
+## 🔌 INTÉGRATION API IA
+
+### Configuration API
+```typescript
+const API_CONFIG = {
+  baseURL: 'https://api.openrouter.ai/api/v1',
+  apiKey: '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',
+  model: 'anthropic/claude-3-sonnet',
+  maxTokens: 4096,
+  temperature: 0.3
+};
+```
+
+### Prompts Spécialisés
+```typescript
+const RESOLUTION_PROMPT = `
+Tu es un assistant spécialisé dans la résolution de situations complexes 
+mathématiques pour les élèves de Terminale D en Côte d'Ivoire.
+
+Contexte: {contexte}
+Supports: {supports}
+Consignes: {consignes}
+
+Structure ta réponse selon la méthodologie officielle:
+1. INTRODUCTION: Identifie les outils mathématiques et les étapes
+2. DÉVELOPPEMENT: Résolution détaillée avec justifications
+3. CONCLUSION: Retour au problème et réponse finale
+
+Critères d'évaluation:
+- Pertinence de la méthode choisie
+- Utilisation correcte des outils mathématiques
+- Cohérence du raisonnement
+- Qualité de la présentation
+`;
+```
+
+---
+
+## 🗂️ STRUCTURE DES DONNÉES
+
+### Base de Données Locale (SQLite)
+```sql
+-- Table des utilisateurs
+CREATE TABLE users (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  class TEXT NOT NULL,
+  school TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table des situations résolues
+CREATE TABLE resolutions (
+  id TEXT PRIMARY KEY,
+  user_id TEXT,
+  lesson_type TEXT,
+  situation_text TEXT,
+  resolution_data TEXT,
+  evaluation_data TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
+-- Table de progression
+CREATE TABLE progress (
+  id TEXT PRIMARY KEY,
+  user_id TEXT,
+  lesson_type TEXT,
+  score_average REAL,
+  attempts_count INTEGER,
+  last_attempt DATETIME,
+  FOREIGN KEY (user_id) REFERENCES users (id)
+);
+```
+
+---
+
+## 🎨 DESIGN ET UX
+
+### Palette de Couleurs
+```css
+:root {
+  --primary: #FF7F00;      /* Orange Côte d'Ivoire */
+  --secondary: #00A651;    /* Vert Côte d'Ivoire */
+  --accent: #FFD700;       /* Gold pour les succès */
+  --background: #F8F9FA;   /* Gris clair */
+  --text-primary: #2C3E50; /* Bleu foncé */
+  --text-secondary: #6C757D; /* Gris moyen */
+  --error: #E74C3C;        /* Rouge erreur */
+  --success: #27AE60;      /* Vert succès */
+}
+```
+
+### Écrans Principaux
+1. **Écran d'Accueil** : Dashboard avec progression
+2. **Sélecteur de Leçon** : Grid des 12 leçons
+3. **Résolveur** : Interface de saisie et résolution
+4. **Évaluation** : Affichage des notes et feedback
+5. **Profil** : Statistiques et paramètres
+
+---
+
+## 📊 PLAN DE TESTS
+
+### Tests Unitaires
+- **Services API** : Validation des appels IA
+- **Calculs d'évaluation** : Vérification des scores
+- **Parsing de situations** : Extraction des composants
+
+### Tests d'Intégration
+- **Flux de résolution** complet
+- **Persistance des données** locale
+- **Synchronisation** online/offline
+
+### Tests Utilisateur
+- **Facilité d'utilisation** par des élèves
+- **Pertinence pédagogique** des réponses IA
+- **Performance** sur appareils d'entrée de gamme
+
+---
+
+## 🚀 PLAN DE DÉPLOIEMENT
+
+### Phase 1: Développement (6 semaines)
+- Setup projet Expo
+- Intégration API IA
+- Développement interfaces principales
+- Implémentation logique métier
+
+### Phase 2: Tests et Optimisation (3 semaines)
+- Tests fonctionnels complets
+- Optimisation performances
+- Ajustements UX
+- Tests utilisateur pilote
+
+### Phase 3: Déploiement (2 semaines)
+- Publication sur stores
+- Formation utilisateurs
+- Documentation
+- Support technique
+
+---
+
+## 📈 MÉTRIQUES DE SUCCÈS
+
+### KPIs Techniques
+- **Taux de disponibilité** : > 99%
+- **Temps de réponse IA** : < 10 secondes
+- **Taux d'erreur** : < 1%
+- **Satisfaction utilisateur** : > 4.2/5
+
+### KPIs Pédagogiques
+- **Amélioration des notes** : +15% minimum
+- **Taux d'adoption** : 70% des élèves ciblés
+- **Réduction temps de résolution** : -30%
+- **Validation pédagogique** : Approbation ministère
+
+---
+
+## 🔒 SÉCURITÉ ET CONFIDENTIALITÉ
+
+### Protection des Données
+- **Chiffrement** des données locales
+- **Anonymisation** des requêtes API
+- **Conformité RGPD** (même si hors UE)
+- **Politique de confidentialité** claire
+
+### Sécurité API
+- **Rotation régulière** des clés
+- **Rate limiting** pour éviter les abus
+- **Validation** des inputs utilisateur
+- **Logs sécurisés** pour audit
+
+---
+
+## 💼 ÉQUIPE PROJET
+
+### Rôles Définis
+- **Chef de Projet** : Coordination générale
+- **Développeur Senior** : Architecture et backend
+- **Développeur Mobile** : Interface Expo/React Native
+- **Expert Pédagogique** : Validation contenus
+- **Designer UX/UI** : Expérience utilisateur
+- **Testeur QA** : Validation qualité
+
+---
+
+## 📞 SUPPORT ET MAINTENANCE
+
+### Support Utilisateur
+- **FAQ intégrée** dans l'application
+- **Chat support** avec équipe pédagogique
+- **Tutoriels vidéo** pour chaque fonctionnalité
+- **Forum communautaire** entre utilisateurs
+
+### Maintenance
+- **Mises à jour mensuelles** de contenu
+- **Monitoring** continu des performances
+- **Évolutions** basées sur feedback utilisateurs
+- **Support technique** 7j/7
+
+---
+
+*Fiche de projet v1.0 - MathResolver CI*

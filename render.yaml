@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: mathsolver-ci
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENAI_API_KEY
+        fromSecret: OPENAI_API_KEY
+    autoDeploy: false

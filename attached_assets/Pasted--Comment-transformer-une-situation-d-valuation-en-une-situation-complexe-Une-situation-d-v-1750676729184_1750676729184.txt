@@ -1,0 +1,1491 @@
+
+ Comment transformer une situation d’évaluation en une situation complexe ?
+ ● Une situation d’évaluation est constituée d’un contexte, d’une (ou des) circonstance(s) et d’une 
+(ou des) consigne(s). On dit qu’une situation d’évaluation a trois constituants.
+ ● Une situation complexe est constituée d’un contexte, d’un (ou des) support (s) ; d’une (ou des) 
+fonction (s), et d’une (ou des) consigne(s) (indépendantes). On dit qu’une situation complexe a 
+quatre constituants.
+ Situation complexe
+ Situation d’évaluation
+ un contexte : il décrit l’environnement (lieu, 
+moment, …) dans lequel on se situe
+ Des circonstances : Elles précisent dans quel(s) 
+but(s) la production est réalisée. La plupart du 
+temps, cette fonction est une fonction sociale.
+ Situation complexe
+ ● Un contexte : il décrit l’environnement (lieu, 
+moment, …) dans lequel on se situe.
+ ● Des supports : c’est l’ensemble des éléments matériels, 
+virtuels ou réels, qui sont présentés à l’apprenant : texte 
+écrit, illustration, photo…, et dont il doit effectuer un 
+traitement pour résoudre la situation.
+ Des fonctions :  Elles précisent dans quel(s) 
+but(s) la production est réalisée. La plupart du 
+temps, cette fonction est une fonction sociale.
+ Une ou des consigne(s) : Ce sont des instructions 
+de travail qui sont données à l’apprenant de 
+façon explicite. La situation d’évaluation doit 
+comporter une à trois consignes. Les consignes 
+ne sont forcément indépendantes.
+ Une ou des consigne(s) : Ce sont des instructions 
+de travail qui sont données à l’apprenant de façon 
+explicite. 
+La situation complexe doit comporter 1 à 3 
+consignes indépendantes.
+ Une situation complexe est une situation d’évaluation. Une situation d’évaluation est par nature 
+complexe. La Commission Nationale Pédagogique de Mathématiques de Côte d’Ivoire a 
+décidé en 2020 d’utiliser le terme de situation d’évaluation au premier cycle et celui de situation 
+complexe au second cycle. Pour cette dernière une condition supplémentaire a été ajoutée pour 
+s’aligner aux exigences du BAC UEMOA.
+ La situation complexe doit comporter 1 à 3 consignes indépendantes.
+ Pour passer de la situation d’évaluation à la situation complexe, il suffit de rendre les 
+consignes indépendantes ou de poser une consigne. 
+Résolution d’une situation complexe
+ La rédaction d’une situation doit faire 
+apparaitre :- une introduction 
+L’élève doit citer l’outil qu’il va utiliser et 
+donner les étapes de sa production - un développement 
+L’élève fait montre de ses connaissances 
+mathématiques. Il utilise avec précision les 
+outils mathématiques.
+ Il doit annoncer chaque étape de son raison
+nement pour que le correcteur puisse le suivre.
+ - une conclusion 
+C’est le retour au problème pour donner un 
+avis ou répondre à une préoccupation 
+Nous donnons ici des exemples : 
+2
+ Situation complexe Maths Tle D 20102021.indd   2
+ 20/10/2021   16:02
+II
+ Exemple de situations complexes
+ Leçon 1
+ LIMITES ET CONTINUITÉ
+ Situation complexe
+ La maman d’un élève en terminale D au 
+lycée moderne de Bouaflé désire une relance  
+publicitaire auprès de ses meilleurs clients. 
+Elle fait donc imprimer des dépliants qui lui 
+coûtent 4 000 FCFA en frais fixes plus 100 
+FCFA par dépliant à l’exception de 20 copies 
+qui ne seront pas distribuées. Elle est sure que 
+chaque dépliant sera lu par 20 personnes. 
+La commerçante voudrait déterminer le coût 
+d'un dépliant par client pour une production 
+de dépliants à long terme.
+ Détermine ce coût pour la maman.
+ Leçon 2
+ PROBABILITÉ
+ Situation complexe 1
+ Dans le cadre de l’introduction des TIC à 
+l’école, un établissement scolaire a orga
+nisé une visite d’étude dans une usine de 
+fabrique de microprocesseurs.
+ Le directeur de la fabrique informe les 
+élèves que 4% de la production journalière 
+est défectueuse.
+ Le 
+service 
+contrôle 
+de 
+qualité 
+a mis en place un 
+système de vérifi
+cation
+ systématique des microprocesseurs. 
+Cette vérification n’est pas parfaite, elle 
+ne détecte que 95% des microprocesseurs 
+défectueux et déclare défectueux 2% des 
+microprocesseurs qui ne présentent pour
+tant aucun défaut.
+ Étonnés de savoir qu’un appareil de 
+contrôle n'est pas totalement fiable, les 
+élèves veulent évaluer les marges d’erreur 
+de cet appareil.
+ Détermine la probabilité qu’il y ait erreur 
+lors de son contrôle.
+ Situation complexe 2
+ Lors d’une soirée, une chaîne de télévision 
+a retransmis un match de la coupe d'Afrique 
+des Nations. Cette chaîne a ensuite proposé 
+une émission d’analyse de ce match. L'objet 
+de l'étude est de déterminer l'importance de 
+l'émission d'analyse après le match.
+ On dispose des informations suivantes :
+ • 56 % des téléspectateurs ont regardé le 
+match;
+ • un quart des téléspectateurs ayant regardé le 
+match ont aussi regardé l’émission;
+ • 16,2 % des téléspectateurs ont regardé 
+l’émission.
+ La chaîne veut savoir le pourcentage de 
+téléspectateurs qui n'ont pas regardé l'émission
+ mais qui ont regardé le match.
+ En utilisant tes connaissances mathématiques 
+au programme détermine la probabilité qu'un 
+téléspectateur qui n'a pas regardé l’émission 
+ait regardé le match.
+ 3
+ 20/10/2021   16:02
+ Situation complexe Maths Tle D 20102021.indd   3
+Leçon 3
+ DÉRIVABILITÉ 
+ET ÉTUDE DE FONCTIONS 
+Situation complexe
+ M. Bolou a acheté une feuille métallique 
+de forme rectangulaire de 12 cm de 
+largeur et 2 m de longueur. Il veut la 
+modeler pour en faire une gouttière 
+en pliant les deux longs côtés pour les 
+relever perpendiculairement à la feuille.
+ Il a du mal à trouver la hauteur des côtés 
+relevés pour que la gouttière ait une 
+contenance maximale.
+ Il te sollicite pour l'aider.
+ Propose-lui une solution argumentée.
+ x
+ Leçon 4
+ PRIMITIVES
+ Situation complexe
+ Un pâtissier commercialise des glaces 
+d’un même type très prisées par les 
+consommateurs. Il peut en produire entre 
+0 et 300 par jour dans sa petite entreprise 
+familiale. Cette production est vendue 
+dans sa totalité.
+ Lorsque x représente le nombre en cen
+taines de glaces produites, on note B(x), 
+le bénéfice réalisé par le pâtissier pour la 
+vente des x centaines de glaces.
+ D’après les données précédentes, l’artisan 
+sait que :- pour tout x de l’intervalle [1 ; 3], on a : 
+B’(x) = − 20x + 30, où B(x) est exprimé 
+en milliers de francs et B’ la fonction 
+dérivée de B.- Pour une centaine de glaces vendue, son 
+bénéfice est 20 mille francs.
+ Il te sollicite pour l’aider à déterminer son 
+bénéfice maximal.
+ Détermine son  bénéfice maximal.
+ Leçon 5
+ FONCTIONS LOGARITHMES
+ Situation complexe
+ x
+ Au cours d’une conférence prononcée 
+dans un lycée, le conférencier a donné, 
+entre autres, les informations suivantes :
+ « Tant qu’un organisme est vivant, la 
+quantité de carbone 14 qu’il contient est 
+constante. Après la mort de l’organisme, 
+cette quantité diminue. La mesure de la 
+quantité de carbone 14 restant permet 
+de dater les organismes qui contiennent 
+du carbone, à condition qu’ils datent de 
+moins de 50 000 ans.
+ On note x la fraction de carbone 14 dans 
+un organisme fossilisé.
+ Une modélisation mathématique permet 
+d’établir : f (x) = 1 – 8310lnx où f (x) est 
+l’âge en années
+ d’un fossile. Des archéologues ont décou
+vert récemment deux types de fragments 
+d’os : un des types contient 35% de leur 
+teneur en carbone et l’autre type est vieux 
+de 15 000 ans. »
+ De retour en classe, le chef de classe d’une 
+des classes de Terminale D affirme que 
+selon lui, d’une part les os contenant 35% 
+de leur teneur en carbone n’ont pas plus de 
+100 ans et d’autre part, il est impossible de 
+déterminer la teneur en carbone 14 des os 
+vieux de 15 000 ans. Ses amis cherchent à 
+vérifier ces affirmations.
+ 1. Calcule l’âge d’un fossile qui contient 
+encore 35% de son carbone 14.
+ Arrondis à la centaine d’années.
+ 2. Détermine la fraction de carbone 14 res
+tant dans un fossile vieux de 15 000 ans.
+ 4
+ 20/10/2021   16:02
+ Situation complexe Maths Tle D 20102021.indd   4
+5
+ Situation complexe 1
+ Lors d’une exposition du club « 
+Mathématiques » d'un lycée, des élèves 
+d’une classe de Terminale D ont été très 
+attentifs à l’image ci-dessous.
+ NOMBRES COMPLEXES Leçon 6
+ Situation complexe
+ huit carrés de côtés de mêmes longueurs sont juxtaposés ci-dessous.
+   D                            F                                            E                                           P
+ A           B                            H                                            Q
+ γ α
+ α + β + γ =
+ 4 2k + r r
+ β
+ L’un d’eux affirme que l’égalité inscrite 
+sur l’image change si la longueur de côté 
+du carré augmente ou diminue. Son voisin 
+prétend que si l’égalité est ainsi mentionnée, 
+c’est qu’elle vraie dans tous les cas.
+ En utilisant les outils mathématiques au 
+programme, départage les deux élèves.
+ FONCTIONS EXPONENTIELLES 
+ET FONCTIONS PUISSANCES
+ Leçon 7
+ La pharmacocinétique étudie l’évolution 
+d’un médicament après son administra
+tion dans l’organisme, en mesurant sa 
+concentration plasmatique, c’est-dire sa 
+concentration dans le plasma. On étudie 
+dans cet exercice l’évolution de la concen
+tration plasmatique chez un patient d’une 
+même dose de médicament, en administra
+tion par voie intraveineuse. On note () f t 
+la concentration plasmatique, exprimée en 
+microgramme par litre ( . ) gL1 n-, du médica
+ment, au bout de t heures après administration 
+par voie intraveineuse. Le modèle mathéma
+tique est : () f t e 20 , t 01 =-, avec t ! [0 ; +∞[.
+ La concentration plasmatique initiale du 
+médicament est donc ( ) . f gL 0 20 1 n =- 
+La demi-vie du médicament (notée t0,5 ) est 
+la durée (en heure) après laquelle la concen
+tration plasmatique du médicament est 
+égale à la moitié de la concentration initiale.
+ On estime que le médicament est éliminé 
+dès que la concentration plasmatique est in
+férieure à , . gL 02 1 n-.
+ 1. Détermine la demi-vie.
+ 2. Détermine le temps à partir duquel le 
+médicament est éliminé (Donne le résultat 
+arrondi au dixième.)
+ La pharmacocinétique étudie l’évolution 
+d’un médicament après son administration 
+dans l’organisme, en mesurant sa 
+concentration plasmatique, c’est-dire sa 
+concentration dans le plasma.
+ On étudie dans cet exercice l’évolution 
+de la concentration plasmatique chez un 
+patient d’une même dose de médicament, 
+en administration par voie orale.
+ On note () g t la concentration plasmatique 
+du médicament, exprimée en microgramme 
+par litre ( . ) gL1 n-, au bout de t heures après 
+ingestion par voie orale.
+ Les médecins souhaitent déterminer la 
+durée après laquelle la concentration  
+plasmatique du médicament est maximale.
+ Le modèle mathématique est : 
+() ( ) g t e e 20 , t t 01 =---, avec t ![0 ; +∞[.
+ Détermine la durée après laquelle la 
+concentration plasmatique du médicament 
+est maximale.
+ Donne le résultat à la minute près.
+ Situation complexe 2
+ NOMBRES COMPLEXES 
+ET GÉOMÉTRIE DU PLAN
+ Leçon 8
+ (L'unité graphique est le centimètre)
+ Un mathématicien peintre fait une 
+Situation complexe
+ Situation complexe Maths Tle D 20102021.indd   5 20/10/2021   16:02
+exposition vente dans son atelier près 
+d'un un lycée.
+ En sortie pédagogique dans l'atelier, le 
+tableau ci-dessous attire l'attention des 
+élèves d'une classe de première D.
+ Le chef de classe demande à l’artiste 
+ce que cela représente. Ce dernier lui 
+répond qu’il s’agit d’une représentation 
+d’un escargot. Il précise les sommets des 
+triangles qui forment la coquille sont des 
+points An d'affixe zn telle que z0
+ = 6 et 
+pour tout entier naturel n,
+ +
+ =
+ n 1 +
+ 4
+ 3
+ c m
+ 4
+ 3
+ nZ n
+ i z
+ Ces élèves cherchent à acquérir le tableau 
+pour le placer au fond de la classe mais 
+ils 
+n'ont 
+pas les moyens financiers 
+convenables. Le peintre leur dit que tout 
+élève de terminale D peut reproduire le 
+dessin. 
+En utilisant tes connaissances mathéma
+tiques, reproduis dessin.
+ Leçon 9
+ SUITES NUMÉRIQUES
+ Situation complexe 1
+ Lors d’une visite d’étude dans une usine, 
+des élèves en classes de terminale ont 
+constaté la présence de deux bassins d’eau. 
+Interrogé par des élèves sur l’utilité de ces 
+bassins pour l’entreprise, l’un des
+ responsables leur a donné les informations 
+suivantes.
+ « Un volume constant de 2 200 m3 d’eau est 
+reparti entre les deux bassins A et B.
+ Le bassin A refroidit une machine. Pour des 
+raisons d’équilibre thermique, on crée un 
+courant d’eau entre les deux bassins à l’aide 
+de pompes.
+ Les échanges entre les deux bassins sont 
+modélisés de la façon suivante :
+ Au départ, le bassin A contient 800 m3 d’eau 
+et le bassin B en contient 1 400 m3.- Chaque jour, 10% du volume d’eau pré
+sent dans le bassin A au début de la journée 
+est transféré dans le bassin B ;- Chaque jour, 15% du volume d’eau pré
+sent dans le bassin B au début de la journée 
+est transféré dans le bassin A. »
+ Un élève affirme qu'après un certain nombre 
+de jours, le bassin A aura plus d'eau que le 
+bassin B.
+ Son voisin prétend que le bassin B contien
+dra toujours plus d’eau que le bassin A.
+ En utilisant tes connaissance mathéma
+tiques au programme, départage les deux 
+élèves.
+ Leçon 10
+ CALCUL INTÉGRAL
+ Situation complexe 1
+ Lors d’une conférence prononcée dans 
+un lycée par un médecin, des élèves de 
+Terminale D ont noté les informations 
+suivantes.
+ « 
+La capacité pulmonaire d’un être 
+humain est la quantité d'air présente
+ dans les poumons, mesurée à des fins 
+diagnostiques lors d'une exploration
+ fonctionnelle respiratoire.
+ Elle est exprimée en litres et dépend de 
+plusieurs facteurs dont l’âge.
+ On peut la modéliser par la fonction f
+ définie par : f(x) = 110(ln 2
+ x
+ x
+)
+ où x désigne l’âge et x ∈ [10 ; 90].
+ • La capacité pulmonaire reste supérieure 
+à 4,5 L dans une certaine tranche d’âge.
+ 6
+ 20/10/2021   16:02
+ Situation complexe Maths Tle D 20102021.indd   6
+• La capacité pulmonaire moyenne entre 
+20 et 70 ans n’atteint pas 5 L. »
+ Impressionés, ces élèves cherchent à vé
+rifier les deux dernières affirmations du 
+médecin.
+ En utilisant tes connaissances mathéma
+tiques sur les intégrales, justifie les deux 
+dernières affirmations du médecin.
+ Leçon 11
+ STATISTIQUE À DEUX VARIABLES
+ Situation complexe
+ Des élèves en classe de Terminale 
+dans un lycée, après leur formation sur 
+l’entrepreneuriat, ont reçu un financement 
+d’une ONG pour mener des activités dont 
+le bénéfice servira à réhabiliter leur école. 
+Pour cela, ils ont mis en place une petite 
+Années
+ Nombre de point de vente ni
+ Frais de publicité en millions xi
+ 2013
+ 10
+ Situation complexe 2
+ La coopérative d’un lycée a reçu le terrain 
+représenté ci-dessous par la zone hachurée 
+pour cultiverde la tomate.
+ Le géomètre qui a travaillé sur le lot du 
+lycée affirme que la courbe (C) représentée 
+ci-dessous est celle de la fonction f définie 
+2
+ par : f(x) = 1600 4
+ x x
++ 124 ; x est exprimé 
+en mètres. Les élèves de la promotion 
+terminale souhaitent connaître l'aire de 
+leur terrain pour acheter les grains de 
+tomate. Il te sollicite pour cela.
+ 240
+ 200
+ 160
+ 120
+ 80
+ 40
+ 0
+ h
+ (C)
+ 40    80    120  160  200  240   280  320  360  400  440   480  520  560  600  640  
+d
+ En utilisant tes connaissances sur le calcul 
+intégral, détermine l'aire du terrain.
+ entreprise de distribution de cahiers dans la 
+région. Après quelques années d’activités, 
+ils 
+cherchent à déterminer lequel des 
+facteurs N (nombre de points de vente à 
+installer) ou X (frais de la promotion) a 
+influencé le plus leur chiffre d’affaires Y. 
+Pour cela, ils ont fait le relevé statistique 
+des cinq dernières années qui est consigné 
+dans le tableau suivant :
+ 2014
+ 20
+ 2015
+ 2016
+ 2017
+ 40
+ 1
+ 37,5
+ 1,7
+ Chiffres d'affaires en millions yi
+ Détermine la variable qui influence le chiffre d’affaires.
+ 61,5
+ 7
+ Situation complexe Maths Tle D 20102021.indd   7
+ 1,9
+ 97,5
+ 70
+ 2
+ 180
+ 100
+ 2,5
+ 270,4
+ 20/10/2021   16:02
+Leçon 12
+ ÉQUATIONS DIFFÉRENTIELLES 
+Situation complexe 1
+ Au cours d’une conférence prononcée 
+dans un lycée, la conférencière a donné, 
+entre autres, les informations suivantes :
+ « 
+L’atmosphère terrestre contient de 
+l’azote qui est transformé, en carbone 
+14, radioactif, noté 14C. Les êtres vivants 
+contiennent donc du 14C qui est renouvelé 
+constamment. À leur mort, il n’y a plus 
+d’emprunt de 14C à l’extérieur et le 14C 
+qu’ils contiennent se désintègre. Le temps 
+écoulé depuis la mort d’un être peut donc 
+être évalué en mesurant la proportion de 
+14C qui lui reste.
+ On appelle période (ou demi-vie) d’un 
+élément radioactif le temps au bout du
+quel la moitié des atomes se sont désin
+tégrés.
+ Il a été démontré le nombre N(t) d’atomes 
+14C existant à l’instant t, exprimé en 
+années, dans un échantillon de matière 
+organique vérifie la relation :
+ N’(t) = ⎯ 0,0001238N(t).
+ Des archéologues ont découvert récem
+ment des fragments d’os ayant perdu 30% 
+de leur teneur en carbone. »
+ III
+ Corrigés et barème critérié
+ Leçon 1
+ LIMITES ET CONTINUITÉ
+ De retour en classe, un élève de Terminale 
+confie à ses amis que selon lui, il est 
+impossible de déterminer la période du 
+carbone 14C et que les os découverts par 
+les archéologues n’ont pas plus de 100 
+ans. Ses amis cherchent à vérifier ces 
+affirmations.
+ Détermine l’âge des os découverts par les 
+archéologues.
+ Situation complexe 2
+ En regardant un documentaire à la télévi
+sion, un élève en classe de Terminale D 
+a appris que : « Dans une forêt africaine, 
+la population de singes était de 512 en 
+l’an 2000 et de 256 en 2016. La vitesse 
+de diminution de cette population est, à 
+chaque instant, proportionnelle à cette 
+population. »
+ Cet élève rapporte cette information à ses 
+amis de classe et le chef de classe affirme 
+qu’il ne devrait plus avoir de singes dans 
+cette forêt après l’an 2030.
+ N’étant pas convaincu par cette affirma
+tion, certains élèves de la classe cherchent 
+à la vérifier.
+ En utilisant tes connaissances mathéma
+tiques au programme, confirme ou infirme 
+l’affirmation du chef de classe.
+ Pour répondre au problème qui est posé, je vais utiliser les limites et la continuité
+ Je vais d'abord déterminer le coût de production C(x) pour x clients puis calculer la limite 
+de C(x) lorsque x tend vers 3
+ + .
+ Notons x le nombre de dépliants à produire, où x > 20 et C(x) le coût de production, par 
+client, en FCFA.
+ Il faut déterminer le coût C(x) et puis calculer 
+limCx
+ x"3
+ Cx
+ ( )
+ =
+ x
+ lim
+ 4000 100
+ 20
+ x
+ 20
+ ( )
+ .
+ Le cout de revient de x dépliants est 4000 + 100(x – 20)
+ Le nombre de clients susceptibles de lire les dépliants est 20(x – 20).
+ ( )
+ +-= +
+=
+ 200
+ x
+20
+ ( )
+ "3
+ Cx
+ ( )
+ 5
+ 5
+ x
+ 20
+ En définitive, le coût de production par client à long terme est 5 FCFA.
+ 8
+ 20/10/2021   16:02
+ Situation complexe Maths Tle D 20102021.indd   8
+9
+ • Barème 
+Critères Indicateurs Barème de notation
+ CM1 : Pertinence
+ • Pour répondre au problème qui est posé, je vais 
+utiliser les limites et la continuité.
+ • Je vais d'abord déterminer C(x).
+ • Puis calculer la limite de C(x) lorsque x tend vers +∞.
+ 0,75 points
+ 1 ind sur 3 → 0,5
+ 2 ind sur 3 → 0,75
+ CM2 : Utilisation 
+correcte des outils 
+mathématiques en 
+situation
+ Déterminons le cout de production des dé
+pliants par clients
+ • Le cout de revient de x dépliants est : 4000 + 
+100(x – 20)
+ Déterminons le nombre de clients potentiels 
+• Le nombre de client susceptibles de lire le dépliant 
+est 20(x – 20).
+ Déterminons le coût de production par client 
+• Le coût par client est :                 
+( ) ( )
+ ( )
+ ( ) ( )
+ Cx x
+ x
+ Cx x ouCx x
+ x
+ 20 20
+ 4000 1000 20
+ 5 20
+ 200
+ 20 400
+ 100 3800
+ =
++
+= +-=
++ 6
+ Déterminons le coût de production par client à 
+long terme.
+ • ( ) lim lim x Cx 20
+ 200 0 5 x x
+ &-= = " " 3 3
+ • En définitive, le coût de production par client à long 
+terme est 5 FCFA.  
+2,5 points
+ 1 ind sur 4 → 1
+ 2 ind sur 4 → 1,5
+ 3 ind sur 4 → 2,5
+ Règle des 2/3
+ (2/3) × 4 = 3
+ CM3 : Cohérence
+ de la réponse- Le résultat produit est conforme au résultat attendu 
+(on trouve un nombre entier naturel supérieur à 20)- Le résultat produit est en adéquation avec la 
+démarche (formules sont juste même si le modèle est faux)- La qualité des enchainements de la démarche
+ 1,25 points
+ 1 ind sur 3 → 0,75
+ 2 ind sur 3 → 1,25
+ CP : Critère de 
+perfectionnement
+ (Concision; Originalité, 
+Bonne presentation
+ • Concision
+ ( ) ( )
+ ( ) x x
+ x C 20 20
+ 4000 100 20 =
++- (non concis)
+ ( ) Cx x 5 20
+ 200 = +-                                (concis)
+ ( ) Cx x
+ x
+ 20 400
+ 100 3800 =
++ (concis)
+ • Originalité :
+ ( ) Cx x 5 20
+ 200 = +
+• Présentation : 
+Propreté de la production (Présence des titres des 
+étapes, pas de rature et de surcharge)
+ 0,5 points
+ 1 ind sur 3 → 0,25
+ 2 ind sur 3 → 0,5
+ Règle des 2/3
+ Situation complexe Maths Tle D 20102021.indd   9 20/10/2021   16:02
+10
+ 4
+ 100
+ 98
+ 100
+ 96
+ 100
+ 95
+ 100
+ 2
+ 100
+ 5
+ 100
+ M
+ M —
+ R
+ R —
+ R
+ R —
+ Il y a erreur si le microprocesseur est 
+défectueux et accepté ou en bon état et 
+rejeté.
+ Donc la probabilité qu’il y ait une erreur est :
+ ,
+ PM PM R R 100
+ 4
+ 100
+ 5
+ 100
+ 96
+ 100
+ 2
+ 00212
+ + + # # + = +
+ =
+ ^ ^ h h
+ . , ,
+ ,
+ PM E 2 056 025
+ 014
+ + # =
+ =
+ ^ h
+ . ) ( ) ( ) ( )
+ , ,
+ a PE PM E PM E
+ x
+ 3
+ 044 014
+ + + = +
+ = +
+ ) ( ) , , , , b PE x 0162 044 014 0162 + = + =
+ , ,
+ ,
+ x
+ x
+ 044 0022
+ 005
+ +
+ +
+ =
+ =
+ . ( ) ( )
+ ( )
+ ,
+ , ,
+ ,
+ %
+ P M PE
+ PE M 4
+ 1 0162
+ 044 005
+ 002
+ 2
+ +
+ #
+ =
+ =
+=
+ =
+ E
+ Pour résoudre le problème, je vais utiliser 
+les probabilités. Considérons les évène
+ments :
+ M : « Le microprocesseur est défectueux »
+ R : « Le microprocesseur est accepté »
+ PROBABILITÉ Leçon 2
+ Situation complexe 1
+ Pour résoudre le problème, je vais utiliser 
+les probabilités. Considérons les évène
+ments :
+ M : « Le téléspectateur a regardé le match »
+ E : « Le téléspectateur a regardé l'émission »
+ Situation complexe 2
+ a. Notons x la hauteur des bords relevés.
+ La gouttière obtenue a la forme d’un pavé 
+droit dont les dimensions sont :
+ h = 200 cm ; L = 12 – 2x cm ; l = x cm.
+ Donc le volume V(x) est :
+ V(x) = l × L × h 
+V(x) = x(12 – 2x) × 200.
+ Soit V(x) = 400(6x – x2)
+ b. Déterminons le maximum de la 
+fonction V.
+ D = [0;6]
+ , ( ) ( )
+ ( )
+ x DV x x
+ V x x
+ 8003
+ 0 3 +
+ 6 ! =
+= =
+ l
+ l
+ 
+V est croissante sur [0;3]
+ V est décroissante sur [3;6]
+ Tableau de variation
+ x 0 3 6
+ V'(x)     +      0      –   
+V(x) 3600
+ 0 0
+ DÉRIVABILITÉ 
+ET ÉTUDE DE FONCTIONS 
+Leçon 3
+ 0,56
+ 1- x
+ 0,44
+ 0,25
+ x
+ 0,75 M
+ M —
+ E
+ E —
+ E
+ E —
+ Situation complexe Maths Tle D 20102021.indd   10 20/10/2021   16:02
+11
+ Le maximum de V est 3600 cm3 atteint 
+pour x = 3 cm.
+ Conclusion : 
+La hauteur des bords relevés pour obtenir 
+un volume maximal est donc de 3 cm.
+ Un fossile qui contient encore 35% de 
+son carbone 14 a environs 8725 ans.
+ 2. Il s’agit de trouver x tel que : 
+f(x) = 15000
+ f(x) = 15000 + 1 – 8310 lnx = 15000
+ &   lnx = 8310
+ 1 15000- 
+&  lnx = 8310
+ 14999
+& x = e8310
+ 14999
+ & x = 0,1645 (par excès à 10-4 près)
+ Soit environ 16,45 %
+ 1. Son âge est f(0,35)
+ On a : 
+f(0,35) = 1 – 8310 ln(0,35) = 8725,0218
+ a. Pour tout x élément de ]1;3[
+ B'(x) = –20(x – 1,5)
+ B’(x) = 0 + x = 1,5 ; B’(x) < 0 + x < 1,5 
+et B’(x) > 0 + x > 0
+ 6x ! ]1;1,5[, B'(x) > 0 et 6x ! ]1,5;3[,
+ B'(x) < 0
+ D'où, B atteint son maximum en 1,5.
+ Donc, il devra fabriquer 1500 glaces par 
+jour pour que le bénéfice soit maximal.
+ b. Pour tout x élément de ]1;3[
+ B(x) = –10x2 + 30x + c (c!ℝ) et B(1) = 20
+ B(1) = 20 + 20 + c = 20
+ + c = 0
+ Doù, 6x![1 ; 3], B(x) = –10x2 + 30x
+ B(1,5) = 22,5
+ Donc le bénéfice maximal est 22 500 F.
+ x 1 1,5 3
+ B'(x)     +      0      –   
+B(x) 22,5
+ 20 0
+ B(1,5) = 22,5 
+Donc le bénéfice maximal est 22 500 F.
+ PRIMITIVES Leçon 4
+ FONCTIONS LOGARITHMES Leçon 5
+ NOMBRES COMPLEXES Leçon 6
+ On se place dans le repère orthonormé 
+direct (A ; u , v) tel que : 
+u etv AB AD = =
+ On considère les points E et F sur 
+[DP] tels que β et γ soient des mesures 
+respectives de , uAE `` jj \ et , uAF `` jj \
+ On note zP
+ , zE
+ et zF
+ les affixes respectives 
+des points P, E et F.
+ On a zP
+ = 8 + i , zE
+ = 5 + i et zF
+ = 2 + i
+ Donc zP
+ ×zE
+ ×zF
+ = (8+i)(5+i)(2+i) = 
+(39+13i)(2+i) = 13(1+i)(2+i) = 13(5+5i)
+ zP
+ ×zE
+ ×zF
+ = 65(1+i)
+ On a zP
+ ×zE
+ ×zF
+ = 65(1+i) 
+Donc arg(zP
+ ×zE
+ ×zF
+ ) =arg(65(1+6i))+2kπ, 
+k ! ℤ.
+ Arg(zP
+ ) + arg(zE
+ ) + arg(zF
+ ) = arg(1+i) +2kπ, 
+k ! ℤ. 
+Mes , uAP ` j \+ mes , uAE `` jj \+ mes 
+, uAF `` jj \= 4
+ r + 2kπ, k ! ℤ  
+a + β + ϒ = 4
+ r + 2kπ, k ! ℤ 
+En conclusion, c’est le voisin ayant 
+affirmé que l’égalité est vraie dans tous 
+les cas qui a raison car quelle que soit 
+la longueur du côté du carré, le repère 
+(A ; u , v) conduit toujours au résultat 
+ci-dessous.
+ Situation complexe Maths Tle D 20102021.indd   11 20/10/2021   16:02
+12
+ D'où, g atteint son maximum en ,
+ ( ) ln
+ 09
+ 10
+ ,
+ ( ) ln
+ 09
+ 10 = 2,56  (arrondi d'ordre 2)
+ La concentration plasmique du 
+médicament est maximal après 2,56 h
+ 1.
+ () ( )
+ ,
+ ,
+ , ( )
+ ln
+ ln
+ t f
+ e
+ e
+ t
+ t
+ t pard faut pr s
+ f 2
+ 1 0
+ 20 10
+ 2
+ 1
+ 01 2
+ 01
+ 2
+ 693 10 é à è
+ ,
+ ,
+ t
+ t
+ 01
+ 01
+ 2
+ =
+ =
+ =- =
+=
+ =--
+La demi-vie est environ 7h
+ 2.
+ 
+() ,
+ ,
+ ,
+ , ( , )
+ ,
+ ( , )
+ ,
+ ln
+ ln
+ f t
+ e
+ e
+ t
+ t
+ t
+ 02
+ 20 02
+ 001
+ 01 001
+ 01
+ 001
+ 461
+ ,
+ ,
+ t
+ t
+ 01
+ 01
+ 1
+ 1
+ 1
+ 1
+ 2
+ 2----
+ Le médicament est éliminé après 46,1h
+ Pour reproduire, je vais utiliser nombres 
+complexes et géométrie du plan. 
+Je vais munir le plan complexe d'un 
+repère orthonormé direct d'origine O. 
+Puis justifier que le point An+1 est l'image 
+de An par la similitude directe de centre 
+O, de rapport 2
+ 3 et d'angle 6
+ r.
+ J'en déduis que triangle OAnAn+1 est un 
+demi triangle équilatéral, rectangle en An.
+ Le symétrique Bn du point An par rapport 
+au point An+1 est tel que le triangle OAnBn 
+est équilatéral direct.
+ De ce fait, le point An+1 est le milieu du 
+côté [AnBn].
+ • Justifions que pour tout entier naturel n, 
+An+1 est l'image de An par la similitude 
+directe de centre O, de rapport 2
+ 3et 
+d'angle 6
+ r .
+ zn+1 est de la forme azn où a est un nombre 
+complexe non nul.
+ ( ) ù
+ cos
+ sin
+ a i
+ a
+ a e o Arg a
+ 2
+ 3
+ 2
+ 3
+ 4
+ 3
+ 2
+ 3
+ 2
+ 1
+ 2
+ 3 6
+ i
+ &
+ i
+ i
+ i
+ i r
+ = +
+ =
+ = =
+ =
+ =
+ =
+ i
+ Z
+ [
+ \
+ ] ] ] ] ] ] ] ]
+ D'où, An+1 est l'image de An par la 
+similitude directe de centre O, de rapport 
+2
+ 3et d'angle 6
+ r.
+ • An+1 est l'image de An
+ par la similitude 
+directe de centre O, de rapport 2
+ 3 et 
+d'angle 6
+ r .
+ D'où, le triangle OAnAn+1 est un demi 
+triangle équilatéral, rectangle en An+1.
+ FONCTIONS EXPONENTIELLES 
+ET FONCTIONS PUISSANCES
+ Leçon 7 NOMBRES COMPLEXES 
+ET GÉOMÉTRIE DU PLAN
+ Leçon 8
+ Situation complexe 1
+ , ;
+ () (( , ) ),
+ () (( , ) ),
+ ( , ) ( , )
+ ( , )
+ ( , )
+ ( , ) ,
+ , ( , )
+ ,
+ ( )
+ ,
+ ( ) , ( )
+ , ,
+ ( ) , ()
+ ,
+ ( ) ; , ()
+ ln
+ ln
+ ln
+ ln
+ ln
+ ln
+ t
+ g t e e
+ g t e e
+ e e e e
+ e e
+ e e
+ t t
+ t
+ t
+ parexc s pr s
+ t g t
+ t g t
+ 0
+ 20 01
+ 01
+ 01 0 01 0
+ 01
+ 01
+ 01 01
+ 09 01
+ 09
+ 10
+ 09
+ 10 256 10
+ 0 09
+ 10 0
+ 09
+ 10 0
+ alemêmesigneque
+ è à è
+ et
+ ,
+ ,
+ , ,
+ ,
+ ,
+ t t
+ t t
+ t t t t
+ t t
+ t t
+ 01
+ 01
+ 01 01
+ 01
+ 01
+ 2
+ +
+ +
+ +
+ +
+ +
+ +
+ 6 3
+ 6
+ 6 3
+ 2 2
+ 2
+ 1
+ 1
+ 1
+ 1
+ 2
+ 1
+ !
+ !
+ !
+ +
+ =-+- +- +- +-----
+ =
+ +-------------
+ l
+ l
+ l
+ l
+ <
+ 6 6
+ <
+ <
+ F
+ F
+ F
+ Situation complexe Maths Tle D 20102021.indd   12 20/10/2021   16:02
+13
+ Pour les départager, je vais utiliser les 
+suites numériques.
+ Pour tout entier naturel n, notons :
+ an le volume d’eau, exprimé en m3, conte
+nu dans le bassin A à la fin du n-ième jour 
+de fonctionnement ;
+ bn le volume d’eau, exprimé en m3, conte
+nu dans le bassin B à la fin du n-ième jour 
+de fonctionnement.
+ Ainsi a0 = 800 et b0 = 1400
+ 1. Exprimons an+1 en fonction de an
+ .
+ Tous les jours
+ • 15% de l’eau du bassin B est transféré 
+au bassin A soit 0,15bn ;
+ • 10% de l’eau du bassin A est transféré 
+au bassin B, il reste donc dans le bas
+sin A : 0,9an
+ , , ( ) ,
+ , ,
+ n a a b
+ Ora b
+ 0152200 09
+ 2200donc
+ N n n n
+ n n
+ 6 ! =-+
+ + =
+ , ( ) ,
+ ,
+ ,
+ a a a
+ a
+ n a a
+ 0152200 09
+ 330 075
+ 4
+ 3 330 Donc N
+ n n n
+ n
+ n n
+ 1
+ 1
+ 6 !
+ =-+
+ = +
+ = +
+ +
+ +
+ 2. Posons un
+ = an - 1320, pour tout entier 
+naturel n
+ ( )
+ n
+ u a a
+ a
+ a
+ u
+ 1320 4
+ 3 330 1320
+ 4
+ 3 990
+ 4
+ 3 1320
+ 4
+ 3
+ N
+ n n n
+ n
+ n
+ n
+ 1 1
+ 6 !
+ =-= +
+=
+=
+=
+ + +
+ Donc, (un
+ ) est une suite géométrique de 
+raison 4
+ 3
+ On en déduit que : 
+6 n ! ℕ, un
+ = -520 4
+ 3 n a k
+ Comme un
+ = an -1320 on an
+ = un
+ + 1320
+ Donc an = 1320 + 520 4
+ 3 n a k
+ 3. On cherche n tel que an > bn 
+an
+ > 2200-an
+ an 
+>1100
+ 1320 - 520 4
+ 3 n a k> 1100-520 4
+ 3 n a k > -220
+ 4
+ 3 n a k< 6
+ 11
+ nln4
+ 3 < 6
+ 11 a k
+ n > ln
+ ln
+ 4
+ 3
+ 26
+ 11 ^
+ ^ h
+ h
+ Et, ln
+ ln
+ 4
+ 3
+ 26
+ 11 ^
+ ^ h
+ h = 2,990 (arrondi d'ordre 3)
+ n > 2,9901
+ À partir du 3ème jours, le basin A a plus 
+d'eau que le bassin B.
+ C'est l'élève qui a fait la 1ère affirmation 
+qui a raison.
+ • Notons Bn le symétrique de de An par 
+rapport à An+1.
+ Le triangle OAnBn est un triangle 
+équilatéral.
+ Le point An+1 est le pied de la médiatrice 
+du triangle OAnBn issue du point O.
+ Je place les points O et A0
+ puis je construis 
+successivement les points An (n ≥ 1) à 
+l'aide de la médiatrice de [AnBn].
+ SUITES NUMÉRIQUES Leçon 9
+ Situation complexe Maths Tle D 20102021.indd   13 20/10/2021   16:02
+14
+ Pour justifier les deux affirmations, je vais 
+utiliser les calcul intégral.
+ 1. Affirmation 1 
+Étudions la fonction f afin de la comparer à 4,5 
+6 x ! [10;90], f’(x) = 110 ln
+ x
+ x 3
+ 3
+ -f’(x) > 0 + x ! [10 ; e3] donc f est 
+croissante sur [10 ; e3]
+ -f’(x) < 0 + x ! [e3 ; 90] donc f est 
+décroissante sur [e3 ; 90]
+ -f’(e3) = e
+ 110
+ 3
+  ≈ 5,46
+ -sur [10 ; e3], f est continue et stricte
+ment croissante et 4,5 ! f([10 ; e3]) = 
+[3,3;5,48] donc il existe α ! [10 ; e3] tel 
+que f(α) = 4,5
+ de même il existe un β ! [e3;90] tel que 
+f(β) = 4,5
+ On déduit que pour tout x ! [α;β],
+ f(x) ≤ 4,5
+ Conclusion : Dans la tranche d’âge [α ; β], 
+la capacité pulmonaire est supérieur à 4,5 L 
+2. Affirmation 2
+ Calculons la valeur moyenne f 
+( ) ln m x
+ x dx 70 20
+ 1 110 2
+ 20
+ 70 =-- #
+ ln m x x dx 50
+ 10 1 2 1
+ 20
+ 70 =-^ h #
+ ln m x 5
+ 1 2 1
+ 2
+ 1 2 =-^ h 9 C (à corriger en met
+tant les bornes)
+ ln ln m 11
+ 2
+ 1 2 0 2 10 70 2 2 2 =---^ ^ h h 9 C
+ m ≈ 4,06 L ; 4,06 < 5.
+ Donc la valeur moyenne de la capacité 
+pulmonaire entre 20 et 70 ans est infé
+rieure à 5L.
+ 1. Déterminons une primitive de la fonc
+tion f sur l’intervalle [0;600].
+ ( ) f x x x
+ 1600 4 124 2
+ =-+
+ Une primitive F de f définie par:
+ ( ) x x x x 3 1600 8 124 F 3 2
+ # =-+
+ 1. Déterminons l’aire de la partie limitée 
+par la courbe et les droites d’équation 
+x = 0 et x = 600
+ 
+( ) .
+ .
+ .
+ A f x dxua
+ ua
+ ua
+ 600 0
+ 74400 0
+ 74400
+ F F 0
+ 600 =
+ =
+=
+=
+ ^
+ ^
+ ^ ^ h
+ h
+ hh
+ #
+ -L’aire du terrain est 74400 × 1600 soit 
+119 040 00 m2
+ CALCUL INTÉGRAL Leçon 10 Situation complexe 2
+ Situation complexe 1
+ STATISTIQUE À DEUX VARIABLES Leçon 11
+ Pour repondre au  problème posé, je vais 
+utiliser les statistiques à deux variables.
+ 1. Déterminons le coefficient de corréla
+tion r entre N et Y :
+ N 5
+ 10 20 40 70 100 48 = + + + + =
+ , , , , , Y 375 615 975 180 2704 1294 5 = + + + + =
+ ( ) VN 5
+ 10 20 40 70 100 1096 48 2 2 2 2 2
+ 2 = + + + +- =
+ ( ) , , , ,
+ ,
+ VY 5
+ 375 61 975 180 2704 1294
+ 73029976
+ 2 2 2 2 2
+ 2 = + + + +
+=
+ ( )
+ ( , )
+ ,
+ ,
+ , (pardéfautà10 près)
+ r VN Y
+ CovNY
+ r
+ 1096 73029976
+ 281976
+ 099
+ 1
+ 1
+ 2
+ #
+ #
+ =
+ =
+ =
+( , )
+ ,
+ , CovNY
+ 281976
+ 48 1294 , , , ,
+ 5
+ 10 375 20 615 40 975 70 180 100 2704 # =
+=
+ # # # # # + + + +
+ Situation complexe Maths Tle D 20102021.indd   14 20/10/2021   16:02
+15
+ 2. Déterminons le coefficient de corréla
+tion r entre X et Y :
+ , , , , X 5
+ 1 17 19 2 25 182 = + + + + =
+ ( ) , , , ,
+ ,
+ VX 1 17 19 2 25
+ 5 182
+ 02376
+ 2 2 2 2 2
+ 2 = + + + +
+=
+ ( , )
+ ,
+ , , CovXY
+ 371884
+ 182 1294 , , , , , , ,
+ 5
+ 1 375 17 615 19 975 2 180 25 2704 # =
+=
+ # # # # # + + + +
+ ( )
+ ( , )
+ ,
+ , r VX Y
+ CovXY
+ 1096 73029976
+ 281976
+ 2
+ 2 # # = =-, (pardéfautà10 près) 089 =
+ 3. 0,87 ≤ |r2
+ | < |r1
+ | < 1
+ D'où le nombre de points de vente in
+fluence plus que les frais publicitaire en 
+millions de francs CFA.
+ 1. La fonction N : t 8N(t) est solution 
+de l’équation différentielle                 
+f’ = 0,0001238f.
+ Donc, N(t) = ke-0,0001238t, k!ℝ 
+N(0) = N0
+ + ke0 = N0
+ + k = N0
+ Donc N(t) = N0
+ e0,0001238t
+ 2. Il faut trouver la valeur pour laquelle :
+ N(t) = 1
+ 2N0
+ N(t) = 1
+ 2N0
+ + N0
+ e0,0001238t = 1
+ 2N0
+ + 0,0001238t = ln(0,5)
+ + t = ,
+ ( , ) ln
+ 00001238
+ 05 ≈ 5599 ans
+ La période (ou demi vie) du 14C est 5599 
+ans.
