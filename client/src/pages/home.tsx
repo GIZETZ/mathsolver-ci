@@ -1,4 +1,3 @@
-
 import { Camera, Edit3, History, Calculator, Menu } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
@@ -30,18 +29,8 @@ export default function Home() {
               <Menu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
             </Button>
             <div className="text-center">
-              <div className="w-12 h-12 bg-blue-600 rounded-xl mx-auto mb-2 flex items-center justify-center overflow-hidden">
-                <img 
-                  src="/logo.png" 
-                  alt="MathSolver CI Logo" 
-                  className="w-8 h-8 object-contain"
-                  onError={(e) => {
-                    // Fallback au cas où l'image ne charge pas
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                  }}
-                />
-                <Calculator className="w-6 h-6 text-white hidden" />
+              <div className="w-12 h-12 bg-blue-600 rounded-xl mx-auto mb-2 flex items-center justify-center">
+                <Calculator className="w-6 h-6 text-white" />
               </div>
               <h1 className="text-xl font-bold text-gray-900 dark:text-white">MathSolver CI</h1>
             </div>
@@ -98,14 +87,29 @@ export default function Home() {
 
           {/* Program Info */}
           <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700">
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Programme Terminale D</h3>
+            <h2 className="font-semibold text-gray-900 dark:text-white mb-2">Programme Terminale D - Côte d'Ivoire</h2>
             <div className="grid grid-cols-2 gap-2 text-xs text-gray-600 dark:text-gray-400">
               <span>• Nombres complexes</span>
-              <span>• Fonctions</span>
-              <span>• Équations</span>
-              <span>• Probabilités</span>
-              <span>• Géométrie</span>
-              <span>• Statistiques</span>
+              <span>• Fonctions exponentielles</span>
+              <span>• Équations différentielles</span>
+              <span>• Probabilités conditionnelles</span>
+              <span>• Géométrie dans l'espace</span>
+              <span>• Statistiques descriptives</span>
+            </div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+              Conforme au programme UEMOA - Résolution intelligente avec IA
+            </p>
+          </div>
+
+          {/* SEO Content Section */}
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-700 rounded-xl p-4 shadow-sm border border-blue-200 dark:border-gray-600 mt-4">
+            <h3 className="font-semibold text-blue-900 dark:text-blue-300 mb-2">Pourquoi choisir MathSolver CI ?</h3>
+            <div className="space-y-2 text-xs text-blue-800 dark:text-blue-200">
+              <p>✓ <strong>IA spécialisée</strong> : Formée sur le programme ivoirien Terminale D</p>
+              <p>✓ <strong>OCR intégré</strong> : Scannez vos exercices en photo</p>
+              <p>✓ <strong>Solutions détaillées</strong> : Méthodologie UEMOA respectée</p>
+              <p>✓ <strong>Hors ligne</strong> : Fonctionne sans connexion internet</p>
+              <p>✓ <strong>Gratuit</strong> : Aucun abonnement requis</p>
             </div>
           </div>
 
