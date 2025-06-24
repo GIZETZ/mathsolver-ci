@@ -1,19 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-
 export function useAuth() {
-  const { data: user, isLoading, error } = useQuery({
-    queryKey: ["/api/auth/user"],
-    retry: false,
-    retryOnMount: false,
-    refetchOnWindowFocus: false,
-  });
-
-  // If there's a 401 error, the user is not authenticated
-  const isAuthError = error && error.message?.includes('401');
-
+  // Application sans authentification - tous les utilisateurs sont considérés comme "connectés"
   return {
-    user,
-    isLoading: isLoading && !isAuthError,
-    isAuthenticated: !!user,
+    user: { id: 'anonymous', name: 'Utilisateur' },
+    isLoading: false,
+    isAuthenticated: true,
   };
 }
