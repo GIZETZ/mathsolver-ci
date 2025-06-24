@@ -243,8 +243,11 @@ export default function Result() {
           </Link>
         </div>
 
-        {/* Ad Banner After Results */}
-        <AdBanner slot="9876543210" format="rectangle" className="my-6" />
+        {/* Ad Banner Ezoic After Results */}
+        <AdBanner adType="ezoic" pageType="result" className="my-6" />
+        
+        {/* Ad Banner AdSense (fallback) */}
+        <AdBanner slot="9876543210" format="rectangle" className="my-4" />
       </div>
     </div>
   );
