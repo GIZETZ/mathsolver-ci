@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface AdBannerProps {
   slot?: string;
@@ -17,6 +17,9 @@ export default function AdBanner({
   ezoicId,
   adType = "adsense"
 }: AdBannerProps) {
+  const [isDebugMode, setIsDebugMode] = useState(false);
+  const adRef = useRef<HTMLDivElement>(null);
+  const [hasLoaded, setHasLoaded] = useState(false);
   
   // Slots automatiques par page
   const getSlotByPage = () => {
@@ -45,6 +48,10 @@ export default function AdBanner({
   };
 
   useEffect(() => {
+    // Vérifier si le mode debug Ezoic est activé
+    const urlParams = new URLSearchParams(window.location.search);
+    setIsDebugMode(urlParams.has('ez_js_debugger'));
+
     if (adType === 'ezoic') {
       try {
         if (typeof window !== 'undefined' && window.ezstandalone) {
@@ -52,22 +59,42 @@ export default function AdBanner({
           
           window.ezstandalone.cmd.push(function () {
             // Nettoyer les anciennes annonces pour éviter les conflits
-            window.ezstandalone.destroyPlaceholders(placeholderId);
-            
-            // Afficher les nouvelles annonces
-            window.ezstandalone.showAds(placeholderId);
+            try {
+              window.ezstandalone.destroyPlaceholders(placeholderId);
+              
+              // Petit délai avant d'afficher les nouvelles annonces
+              setTimeout(() => {
+                window.ezstandalone.showAds(placeholderId);
+                setHasLoaded(true);
+              }, 100);
+            } catch (innerError) {
+              console.log('Ezoic inner error:', innerError);
+            }
           });
+        } else {
+          console.log('Ezoic script not loaded yet');
         }
       } catch (error) {
         console.log('Ezoic error:', error);
       }
     } else {
       try {
-        if (typeof window !== 'undefined' && window.adsbygoogle) {
-          window.adsbygoogle.push({});
+        // Vérifier si l'élément n'a pas déjà une annonce
+        if (typeof window !== 'undefined' && window.adsbygoogle && adRef.current && !hasLoaded) {
+          const insElements = adRef.current.querySelectorAll('ins.adsbygoogle');
+          insElements.forEach((ins) => {
+            if (!ins.hasAttribute('data-adsbygoogle-status')) {
+              try {
+                window.adsbygoogle.push({});
+                setHasLoaded(true);
+              } catch (adsError) {
+                console.log('AdSense error:', adsError);
+              }
+            }
+          });
         }
       } catch (error) {
-        console.log('AdSense error:', error);
+        console.log('AdSense setup error:', error);
       }
     }
 
@@ -84,18 +111,26 @@ export default function AdBanner({
         }
       }
     };
-  }, [adType, ezoicId, pageType]);
+  }, [adType, ezoicId, pageType, hasLoaded]);
 
   if (adType === 'ezoic') {
+    const placeholderId = getEzoicIdByPage();
     return (
-      <div className={`ad-container ${className}`}>
-        <div id={`ezoic-pub-ad-placeholder-${getEzoicIdByPage()}`}></div>
+      <div className={`ad-container ${className}`} ref={adRef}>
+        <div id={`ezoic-pub-ad-placeholder-${placeholderId}`}></div>
+        {isDebugMode && (
+          <div className="text-xs text-gray-500 mt-1 p-2 bg-gray-100 rounded">
+            Debug Ezoic: Placeholder ID {placeholderId} | Page: {pageType}
+            <br />
+            Pour diagnostiquer: ajoutez ?ez_js_debugger=1 à l'URL
+          </div>
+        )}
       </div>
     );
   }
 
   return (
-    <div className={`ad-container ${className}`}>
+    <div className={`ad-container ${className}`} ref={adRef}>
       <ins 
         className="adsbygoogle"
         style={{ display: 'block' }}
@@ -104,6 +139,11 @@ export default function AdBanner({
         data-ad-format={format}
         data-full-width-responsive="true"
       />
+      {isDebugMode && (
+        <div className="text-xs text-gray-500 mt-1 p-2 bg-gray-100 rounded">
+          Debug AdSense: Slot {getSlotByPage()} | Format: {format}
+        </div>
+      )}
     </div>
   );
 }
