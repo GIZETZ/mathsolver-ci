@@ -1,16 +1,21 @@
-import { Route, Switch } from "wouter";
+import { Switch, Route } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
-import { useEffect } from "react";
+import { useEzoicPageChange } from "@/hooks/useEzoicPageChange";
 import Home from "@/pages/home";
 import Solve from "@/pages/solve";
-import Result from "@/pages/result";
 import History from "@/pages/history";
+import Result from "@/pages/result";
 import About from "@/pages/about";
-import Help from "@/pages/help";
 import Contact from "@/pages/contact";
-import Settings from "@/pages/settings";
+import Help from "@/pages/help";
 import NotFound from "@/pages/not-found";
+import Settings from "@/pages/settings";
+import Profile from "@/pages/profile";
+import Progress from "@/pages/progress";
+import Lessons from "@/pages/lessons";
+import Landing from "@/pages/landing";
+import SeoLanding from "@/pages/seo-landing";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -23,20 +28,17 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  useEffect(() => {
-    // Register service worker for PWA
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then((registration) => {
-            console.log('SW registered: ', registration);
-          })
-          .catch((registrationError) => {
-            console.log('SW registration failed: ', registrationError);
-          });
-      });
-    }
-  }, []);
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 1000 * 60 * 5, // 5 minutes
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
+
+  // Gérer automatiquement les changements de page pour Ezoic
+  useEzoicPageChange();
 
   return (
     <QueryClientProvider client={queryClient}>
