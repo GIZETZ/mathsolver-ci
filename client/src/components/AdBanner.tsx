@@ -20,11 +20,11 @@ export default function AdBanner({
   const [isDebugMode, setIsDebugMode] = useState(false);
   const adRef = useRef<HTMLDivElement>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
-  
+
   // Slots automatiques par page
   const getSlotByPage = () => {
     if (slot) return slot;
-    
+
     switch (pageType) {
       case 'home': return "4067600841";
       case 'solve': return "1234567890";
@@ -37,7 +37,7 @@ export default function AdBanner({
   // IDs Ezoic automatiques par page
   const getEzoicIdByPage = () => {
     if (ezoicId) return ezoicId;
-    
+
     switch (pageType) {
       case 'home': return 101;
       case 'solve': return 102;
@@ -56,12 +56,12 @@ export default function AdBanner({
       try {
         if (typeof window !== 'undefined' && window.ezstandalone) {
           const placeholderId = getEzoicIdByPage();
-          
+
           window.ezstandalone.cmd.push(function () {
             // Nettoyer les anciennes annonces pour éviter les conflits
             try {
               window.ezstandalone.destroyPlaceholders(placeholderId);
-              
+
               // Petit délai avant d'afficher les nouvelles annonces
               setTimeout(() => {
                 window.ezstandalone.showAds(placeholderId);
@@ -82,16 +82,26 @@ export default function AdBanner({
         // Vérifier si l'élément n'a pas déjà une annonce
         if (typeof window !== 'undefined' && window.adsbygoogle && adRef.current && !hasLoaded) {
           const insElements = adRef.current.querySelectorAll('ins.adsbygoogle');
+          let hasUnloadedAds = false;
+
           insElements.forEach((ins) => {
-            if (!ins.hasAttribute('data-adsbygoogle-status')) {
-              try {
-                window.adsbygoogle.push({});
-                setHasLoaded(true);
-              } catch (adsError) {
+            const status = ins.getAttribute('data-adsbygoogle-status');
+            if (!status || status === '' || status === 'unfilled') {
+              hasUnloadedAds = true;
+            }
+          });
+
+          if (hasUnloadedAds && insElements.length > 0) {
+            try {
+              window.adsbygoogle.push({});
+              setHasLoaded(true);
+            } catch (adsError) {
+              // Ignorer les erreurs de doublons
+              if (!adsError.message.includes('already have ads in them')) {
                 console.log('AdSense error:', adsError);
               }
             }
-          });
+          }
         }
       } catch (error) {
         console.log('AdSense setup error:', error);
