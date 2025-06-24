@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import OcrCapture from "@/components/OcrCapture";
+import AdBanner from "@/components/AdBanner";
 
 interface MathSolution {
   problem: string;
@@ -62,11 +63,11 @@ export default function Solve() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to solve problem');
       }
-      
+
       return response.json();
     },
     onSuccess: (solution: any) => {
@@ -76,7 +77,7 @@ export default function Solve() {
       } catch {
         localStorage.removeItem('mathHistory');
       }
-      
+
       // Save to local history with enhanced structure
       const history = JSON.parse(localStorage.getItem('mathHistory') || '[]');
       const newEntry = {
@@ -96,10 +97,10 @@ export default function Solve() {
           conclusion: String(solution.detailedSolution?.conclusion || "")
         },
       };
-      
+
       console.log('Saving entry:', newEntry);
       console.log('Development being saved:', newEntry.detailedSolution.development);
-      
+
       history.unshift(newEntry);
       localStorage.setItem('mathHistory', JSON.stringify(history.slice(0, 10)));
 
@@ -138,14 +139,14 @@ export default function Solve() {
       const canvas = canvasRef.current;
       const video = videoRef.current;
       const context = canvas.getContext('2d');
-      
+
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
       context?.drawImage(video, 0, 0);
-      
+
       const imageData = canvas.toDataURL('image/jpeg', 0.8);
       setCapturedImage(imageData);
-      
+
       // Stop camera stream
       if (stream) {
         stream.getTracks().forEach(track => track.stop());
@@ -371,7 +372,11 @@ export default function Solve() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
         <div className="max-w-md mx-auto">
-          <div className="flex items-center mb-6 pt-8">
+          {/* Ad Banner Top */}
+          <AdBanner slot="1234567890" format="horizontal" className="mb-4" />
+
+          {/* Header */}
+          <div className="flex items-center justify-between mb-6">
             <button
               onClick={() => setMode('choose')}
               className="p-2 hover:bg-white/50 rounded-lg transition-colors"
