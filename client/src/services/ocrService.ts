@@ -30,7 +30,7 @@ export interface OcrApiResponse {
 const OCR_CONFIG = {
   apiKey: 'K83790365588957',
   baseUrl: 'https://api.ocr.space/parse/image',
-  maxFileSize: 1024 * 1024 * 5, // 5MB max
+  maxFileSize: 1024 * 1024, // 1MB max (limite API OCR.space)
   supportedFormats: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/bmp'],
   timeout: 30000 // 30 secondes
 };
@@ -78,12 +78,71 @@ function fileToBase64(file: File): Promise<string> {
 }
 
 /**
+ * Compresse une image si elle dépasse la limite de taille
+ */
+async function compressImageIfNeeded(file: File): Promise<File> {
+  if (file.size <= OCR_CONFIG.maxFileSize) {
+    return file;
+  }
+
+  return new Promise((resolve) => {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d')!;
+    const img = new Image();
+    
+    img.onload = () => {
+      // Calculer les nouvelles dimensions pour réduire la taille
+      const maxWidth = 1200;
+      const maxHeight = 1200;
+      
+      let { width, height } = img;
+      
+      if (width > height) {
+        if (width > maxWidth) {
+          height *= maxWidth / width;
+          width = maxWidth;
+        }
+      } else {
+        if (height > maxHeight) {
+          width *= maxHeight / height;
+          height = maxHeight;
+        }
+      }
+      
+      canvas.width = width;
+      canvas.height = height;
+      
+      // Dessiner l'image redimensionnée
+      ctx.drawImage(img, 0, 0, width, height);
+      
+      // Convertir en blob avec compression
+      canvas.toBlob((blob) => {
+        if (blob) {
+          const compressedFile = new File([blob], file.name, {
+            type: 'image/jpeg',
+            lastModified: Date.now()
+          });
+          resolve(compressedFile);
+        } else {
+          resolve(file);
+        }
+      }, 'image/jpeg', 0.7); // 70% de qualité
+    };
+    
+    img.src = URL.createObjectURL(file);
+  });
+}
+
+/**
  * Utilise l'API OCR.space pour extraire le texte d'une image
  */
 export async function extractTextFromImage(imageFile: File): Promise<OcrResult> {
   try {
-    // Validation du fichier
-    const validation = validateImageFile(imageFile);
+    // Compression si nécessaire
+    const processedFile = await compressImageIfNeeded(imageFile);
+    
+    // Validation du fichier après compression
+    const validation = validateImageFile(processedFile);
     if (!validation.valid) {
       return {
         success: false,
@@ -95,7 +154,7 @@ export async function extractTextFromImage(imageFile: File): Promise<OcrResult> 
     // Préparation des données pour l'API OCR.space
     const formData = new FormData();
     formData.append('apikey', 'K83790365588957');
-    formData.append('file', imageFile); // Envoyer le fichier directement
+    formData.append('file', processedFile); // Envoyer le fichier compressé
     formData.append('language', 'fre'); // Français
     formData.append('isOverlayRequired', 'false');
     formData.append('detectOrientation', 'true');
