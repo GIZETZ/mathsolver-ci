@@ -2,6 +2,24 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
+// Vérification des variables d'environnement critiques au démarrage
+function checkEnvironmentVariables() {
+  const requiredVars = ['OPENAI_API_KEY'];
+  const missingVars = requiredVars.filter(varName => !process.env[varName]);
+  
+  if (missingVars.length > 0) {
+    console.error('🚨 ERREUR: Variables d\'environnement manquantes:');
+    missingVars.forEach(varName => {
+      console.error(`   - ${varName}`);
+    });
+    console.error('ℹ️  Ajoutez ces variables dans votre configuration Render.com');
+    return false;
+  }
+  
+  console.log('✅ Variables d\'environnement OK');
+  return true;
+}
+
 const app = express();
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: false, limit: '50mb' }));
@@ -37,6 +55,13 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Vérifier les variables d'environnement avant de démarrer
+  const envCheck = checkEnvironmentVariables();
+  if (!envCheck) {
+    console.error('❌ Démarrage interrompu à cause des variables manquantes');
+    process.exit(1);
+  }
+
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
