@@ -24,10 +24,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
       
     } catch (error) {
-      console.error('Error extracting text:', error);
+      console.error('Erreur détaillée OCR:', error);
+      
+      let errorMessage = 'Erreur inconnue lors de l\'extraction du texte';
+      
+      if (error instanceof Error) {
+        console.error('Message d\'erreur OCR:', error.message);
+        
+        // Messages d'erreur spécifiques
+        if (error.message.includes('401') || error.message.includes('Unauthorized')) {
+          errorMessage = 'Clé API OCR invalide ou expirée';
+        } else if (error.message.includes('File size exceeds')) {
+          errorMessage = 'Image trop volumineuse. Veuillez utiliser une image plus petite';
+        } else if (error.message.includes('timeout') || error.message.includes('ETIMEDOUT')) {
+          errorMessage = 'Délai d\'attente dépassé. Veuillez réessayer';
+        } else if (error.message.includes('network') || error.message.includes('fetch')) {
+          errorMessage = 'Problème de connexion. Vérifiez votre réseau';
+        } else {
+          errorMessage = error.message;
+        }
+      }
+      
       res.status(500).json({
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error occurred'
+        error: errorMessage
       });
     }
   });
@@ -82,8 +102,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(responseData);
       
     } catch (error) {
-      console.error("Error solving problem:", error);
-      res.status(500).json({ message: "Failed to solve problem" });
+      console.error("Erreur détaillée lors de la résolution:", error);
+      
+      // Log détaillé pour diagnostiquer le problème
+      if (error instanceof Error) {
+        console.error("Message d'erreur:", error.message);
+        console.error("Stack trace:", error.stack);
+      }
+      
+      // Vérifier si c'est un problème de clé API
+      if (error instanceof Error && error.message.includes('401')) {
+        return res.status(500).json({ 
+          message: "Erreur de configuration API. Vérifiez la clé OPENAI_API_KEY dans les variables d'environnement." 
+        });
+      }
+      
+      // Vérifier si c'est un problème de connexion
+      if (error instanceof Error && (error.message.includes('ECONNREFUSED') || error.message.includes('fetch'))) {
+        return res.status(500).json({ 
+          message: "Problème de connexion au service IA. Veuillez réessayer dans quelques minutes." 
+        });
+      }
+      
+      res.status(500).json({ 
+        message: "Impossible de résoudre l'exercice. Veuillez vérifier votre connexion.",
+        error: process.env.NODE_ENV === 'development' ? error instanceof Error ? error.message : String(error) : undefined
+      });
     }
   });
 
