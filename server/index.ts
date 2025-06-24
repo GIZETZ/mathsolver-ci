@@ -80,6 +80,11 @@ app.use((req, res, next) => {
   } else {
     serveStatic(app);
   }
+  // Redirection ads.txt pour Ezoic
+  app.get('/ads.txt', (req, res) => {
+    const domain = req.get('host')?.split(':')[0] || 'mathsolverci.site';
+    res.redirect(301, `https://srv.adstxtmanager.com/19390/${domain}`);
+  });
 
   // ALWAYS serve the app on port 5000
   // this serves both the API and the client.
