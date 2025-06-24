@@ -5,13 +5,17 @@ interface AdBannerProps {
   format?: 'auto' | 'rectangle' | 'horizontal' | 'vertical';
   className?: string;
   pageType?: 'home' | 'solve' | 'result' | 'history' | 'general';
+  ezoicId?: number;
+  adType?: 'adsense' | 'ezoic';
 }
 
 export default function AdBanner({ 
   slot, 
   format = "auto", 
   className = "",
-  pageType = "general"
+  pageType = "general",
+  ezoicId,
+  adType = "adsense"
 }: AdBannerProps) {
   
   // Slots automatiques par page
@@ -26,15 +30,49 @@ export default function AdBanner({
       default: return "4067600841";
     }
   };
-  useEffect(() => {
-    try {
-      if (typeof window !== 'undefined' && window.adsbygoogle) {
-        window.adsbygoogle.push({});
-      }
-    } catch (error) {
-      console.log('AdSense error:', error);
+
+  // IDs Ezoic automatiques par page
+  const getEzoicIdByPage = () => {
+    if (ezoicId) return ezoicId;
+    
+    switch (pageType) {
+      case 'home': return 101;
+      case 'solve': return 102;
+      case 'result': return 103;
+      case 'history': return 104;
+      default: return 105;
     }
-  }, []);
+  };
+
+  useEffect(() => {
+    if (adType === 'ezoic') {
+      try {
+        if (typeof window !== 'undefined' && window.ezstandalone) {
+          window.ezstandalone.cmd.push(function () {
+            window.ezstandalone.showAds(getEzoicIdByPage());
+          });
+        }
+      } catch (error) {
+        console.log('Ezoic error:', error);
+      }
+    } else {
+      try {
+        if (typeof window !== 'undefined' && window.adsbygoogle) {
+          window.adsbygoogle.push({});
+        }
+      } catch (error) {
+        console.log('AdSense error:', error);
+      }
+    }
+  }, [adType, ezoicId, pageType]);
+
+  if (adType === 'ezoic') {
+    return (
+      <div className={`ad-container ${className}`}>
+        <div id={`ezoic-pub-ad-placeholder-${getEzoicIdByPage()}`}></div>
+      </div>
+    );
+  }
 
   return (
     <div className={`ad-container ${className}`}>
@@ -50,9 +88,13 @@ export default function AdBanner({
   );
 }
 
-// Declare global adsbygoogle for TypeScript
+// Declare global objects for TypeScript
 declare global {
   interface Window {
     adsbygoogle: any[];
+    ezstandalone: {
+      cmd: any[];
+      showAds: (...ids: number[]) => void;
+    };
   }
 }
