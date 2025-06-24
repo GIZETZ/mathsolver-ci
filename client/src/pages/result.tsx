@@ -41,7 +41,7 @@ export default function Result() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
-    
+
     if (id) {
       try {
         const history = JSON.parse(localStorage.getItem('mathHistory') || '[]');
@@ -50,7 +50,7 @@ export default function Result() {
           console.log('Found entry:', found);
           console.log('Development type:', typeof found.detailedSolution?.development);
           console.log('Development content:', found.detailedSolution?.development);
-          
+
           // Ensure all fields are properly converted to strings
           const cleanedEntry = {
             ...found,
@@ -61,7 +61,7 @@ export default function Result() {
               conclusion: String(found.detailedSolution?.conclusion || "")
             }
           };
-          
+
           console.log('Cleaned entry development:', cleanedEntry.detailedSolution.development);
           setEntry(cleanedEntry);
         }
@@ -127,7 +127,7 @@ export default function Result() {
             </div>
             <p className="font-medium text-gray-900 mt-1">{entry.subject}</p>
           </div>
-          
+
           <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
             <div className="flex items-center">
               <Clock className="w-4 h-4 text-green-500 mr-2" />
@@ -150,7 +150,7 @@ export default function Result() {
                   </div>
                   <h3 className="font-semibold text-gray-900">Tâche {taskIndex + 1}</h3>
                 </div>
-                
+
                 <div className="bg-blue-50 rounded-lg p-4 mb-4">
                   <p className="text-blue-900 font-medium">
                     {task.consigne}
@@ -240,6 +240,11 @@ export default function Result() {
               Historique
             </button>
           </Link>
+        </div>
+        </div>
+
+          {/* Ad Banner After Results */}
+          <AdBanner slot="9876543210" format="rectangle" className="my-6" />
         </div>
       </div>
     </div>
