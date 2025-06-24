@@ -1,0 +1,16 @@
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://mathsolverci.site/sitemap.xml
+
+# Optimisations
+Crawl-delay: 1
+
+# Pages importantes
+Allow: /solve
+Allow: /history
+Allow: /about
+Allow: /help
+Allow: /contact
