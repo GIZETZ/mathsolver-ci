@@ -48,8 +48,14 @@ export default function AdBanner({
     if (adType === 'ezoic') {
       try {
         if (typeof window !== 'undefined' && window.ezstandalone) {
+          const placeholderId = getEzoicIdByPage();
+          
           window.ezstandalone.cmd.push(function () {
-            window.ezstandalone.showAds(getEzoicIdByPage());
+            // Nettoyer les anciennes annonces pour éviter les conflits
+            window.ezstandalone.destroyPlaceholders(placeholderId);
+            
+            // Afficher les nouvelles annonces
+            window.ezstandalone.showAds(placeholderId);
           });
         }
       } catch (error) {
@@ -64,6 +70,20 @@ export default function AdBanner({
         console.log('AdSense error:', error);
       }
     }
+
+    // Cleanup function pour nettoyer les annonces Ezoic quand le composant se démonte
+    return () => {
+      if (adType === 'ezoic' && typeof window !== 'undefined' && window.ezstandalone) {
+        try {
+          const placeholderId = getEzoicIdByPage();
+          window.ezstandalone.cmd.push(function () {
+            window.ezstandalone.destroyPlaceholders(placeholderId);
+          });
+        } catch (error) {
+          console.log('Ezoic cleanup error:', error);
+        }
+      }
+    };
   }, [adType, ezoicId, pageType]);
 
   if (adType === 'ezoic') {
@@ -95,6 +115,8 @@ declare global {
     ezstandalone: {
       cmd: any[];
       showAds: (...ids: number[]) => void;
+      destroyPlaceholders: (...ids: number[]) => void;
+      destroyAll: () => void;
     };
   }
 }
