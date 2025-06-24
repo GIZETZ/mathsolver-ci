@@ -5,9 +5,18 @@ import { COMPLEX_SITUATIONS } from "../data/situations";
 import { getAllExampleSolutions as getEnrichedExamples, getExampleByLessonId } from "../data/examples-enriched";
 import { identifyLessonFromText, getToolsForLesson } from "../data/lesson-keywords";
 
+// Vérifier la présence de la clé API
+if (!process.env.OPENAI_API_KEY) {
+  console.error('ERREUR: OPENAI_API_KEY manquante dans les variables d\'environnement');
+}
+
 const openai = new OpenAI({ 
-  apiKey: process.env.OPENAI_API_KEY,
-  baseURL: "https://openrouter.ai/api/v1"
+  apiKey: process.env.OPENAI_API_KEY || '',
+  baseURL: "https://openrouter.ai/api/v1",
+  defaultHeaders: {
+    "HTTP-Referer": "https://mathsolver-ci.onrender.com",
+    "X-Title": "MathSolver CI"
+  }
 });
 
 export interface SituationAnalysis {
@@ -396,15 +405,32 @@ Réponds en JSON avec cette structure :
 `;
 
     try {
-      const response = await openai.chat.completions.create({
-        model: this.model,
-        messages: [{ role: "user", content: prompt }],
-        response_format: { type: "json_object" },
-        temperature: 0.3,
-        max_tokens: 4000,
+      // Test direct avec fetch si OpenAI SDK échoue
+      const apiResponse = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+          "Content-Type": "application/json",
+          "HTTP-Referer": "https://mathsolver-ci.onrender.com",
+          "X-Title": "MathSolver CI"
+        },
+        body: JSON.stringify({
+          model: this.model,
+          messages: [{ role: "user", content: prompt }],
+          response_format: { type: "json_object" },
+          temperature: 0.3,
+          max_tokens: 4000
+        })
       });
 
-      const result = JSON.parse(response.choices[0].message.content || "{}");
+      if (!apiResponse.ok) {
+        const errorText = await apiResponse.text();
+        console.error("OpenRouter API Error:", apiResponse.status, errorText);
+        throw new Error(`API Error ${apiResponse.status}: ${errorText}`);
+      }
+
+      const apiData = await apiResponse.json();
+      const result = JSON.parse(apiData.choices[0].message.content || "{}");
       return result as SolutionStructure;
     } catch (error) {
       console.error("Error generating solution:", error);
