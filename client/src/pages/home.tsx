@@ -1,3 +1,4 @@
+
 import { Camera, Edit3, History, Calculator, Menu } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
@@ -29,8 +30,18 @@ export default function Home() {
               <Menu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
             </Button>
             <div className="text-center">
-              <div className="w-12 h-12 bg-blue-600 rounded-xl mx-auto mb-2 flex items-center justify-center">
-                <Calculator className="w-6 h-6 text-white" />
+              <div className="w-12 h-12 bg-blue-600 rounded-xl mx-auto mb-2 flex items-center justify-center overflow-hidden">
+                <img 
+                  src="/logo.png" 
+                  alt="MathSolver CI Logo" 
+                  className="w-8 h-8 object-contain"
+                  onError={(e) => {
+                    // Fallback au cas où l'image ne charge pas
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                  }}
+                />
+                <Calculator className="w-6 h-6 text-white hidden" />
               </div>
               <h1 className="text-xl font-bold text-gray-900 dark:text-white">MathSolver CI</h1>
             </div>
