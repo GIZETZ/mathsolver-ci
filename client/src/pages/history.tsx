@@ -105,7 +105,11 @@ export default function History() {
           </div>
         ) : (
           <>
-            <AdBanner className="mb-4" />
+            {/* Ad Banner - Ezoic */}
+            <AdBanner adType="ezoic" pageType="history" className="mb-4" />
+            
+            {/* Ad Banner - AdSense (fallback) */}
+            <AdBanner pageType="history" className="mb-4" />
             <div className="space-y-3">
               {filteredHistory.map((entry) => (
                 <div key={entry.id} className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
