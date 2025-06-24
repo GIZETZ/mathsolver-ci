@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowLeft, BookOpen, Clock, Star, CheckCircle } from "lucide-react";
 import { Link } from "wouter";
 import { MathSolution, MathText, CalculationStep } from "@/components/MathRenderer";
+import AdBanner from "@/components/AdBanner";
 
 interface TaskSolution {
   id: number;
@@ -241,11 +242,9 @@ export default function Result() {
             </button>
           </Link>
         </div>
-        </div>
 
-          {/* Ad Banner After Results */}
-          <AdBanner slot="9876543210" format="rectangle" className="my-6" />
-        </div>
+        {/* Ad Banner After Results */}
+        <AdBanner slot="9876543210" format="rectangle" className="my-6" />
       </div>
     </div>
   );
