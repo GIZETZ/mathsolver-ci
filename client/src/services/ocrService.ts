@@ -162,17 +162,11 @@ export async function extractTextFromImage(imageFile: File): Promise<OcrResult> 
     formData.append('scale', 'true');
     formData.append('OCREngine', '2');
 
-    // Appel direct à l'API OCR.space
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 30000);
-
+    // Appel direct à l'API OCR.space sans abort controller
     const response = await fetch('https://api.ocr.space/parse/image', {
       method: 'POST',
-      body: formData,
-      signal: controller.signal
+      body: formData
     });
-
-    clearTimeout(timeoutId);
 
     if (!response.ok) {
       throw new Error(`Erreur API OCR: ${response.status}`);
@@ -221,6 +215,24 @@ export async function extractTextFromImage(imageFile: File): Promise<OcrResult> 
     console.error('Erreur lors de l\'extraction OCR:', error);
     
     if (error instanceof Error) {
+      // Gestion spécifique des erreurs d'abort
+      if (error.name === 'AbortError') {
+        return {
+          success: false,
+          text: '',
+          error: 'Délai d\'attente dépassé. Veuillez réessayer avec une image plus petite.'
+        };
+      }
+      
+      // Gestion des erreurs de taille de fichier
+      if (error.message.includes('File size exceeds')) {
+        return {
+          success: false,
+          text: '',
+          error: 'Image trop volumineuse après compression. Utilisez une image plus petite.'
+        };
+      }
+      
       return {
         success: false,
         text: '',
