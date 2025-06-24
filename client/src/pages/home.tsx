@@ -48,12 +48,10 @@ export default function Home() {
           {/* Main Action Button */}
           <Link href="/solve">
             <button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-2xl p-6 mb-6 shadow-lg transition-all duration-200 active:scale-95">
-              <div className="flex items-center justify-center space-x-3">
-                <Calculator className="w-6 h-6" />
-                <span className="text-lg font-semibold">Résoudre un exercice</span>
-              </div>
-              <p className="text-blue-100 text-sm mt-2">
-                Photo ou saisie manuelle
+              <Calculator className="w-8 h-8 mx-auto mb-3" />
+              <h2 className="text-lg font-semibold mb-2">Résoudre un exercice</h2>
+              <p className="text-blue-100 text-sm">
+                Photo, saisie ou import d'image
               </p>
             </button>
           </Link>
@@ -113,8 +111,11 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Ad Banner */}
-          <AdBanner className="my-6" />
+          {/* Ad Banner - Ezoic */}
+          <AdBanner adType="ezoic" pageType="home" className="my-6" />
+          
+          {/* Ad Banner - AdSense (fallback) */}
+          <AdBanner pageType="home" className="my-4" />
 
           {/* Footer */}
           <div className="text-center mt-8 text-xs text-gray-500 dark:text-gray-400">
