@@ -143,7 +143,7 @@ export default function PrivacyPolicy() {
               Pour toute question concernant cette politique de confidentialité, vous pouvez nous contacter :
             </p>
             <ul className="list-disc ml-6 mb-6 text-gray-700">
-              <li>Email : contact@mathsolverci.site</li>
+              <li>Email : mathsolverci@gmail.com</li>
               <li>Site web : <a href="https://mathsolverci.site" className="text-blue-600 underline">mathsolverci.site</a></li>
             </ul>
 
