@@ -16,6 +16,7 @@ import Progress from "@/pages/progress";
 import Lessons from "@/pages/lessons";
 import Landing from "@/pages/landing";
 import SeoLanding from "@/pages/seo-landing";
+import PrivacyPolicy from "@/pages/privacy-policy";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -48,8 +49,9 @@ function App() {
         <Route path="/result" component={Result} />
         <Route path="/history" component={History} />
         <Route path="/about" component={About} />
-        <Route path="/help" component={Help} />
         <Route path="/contact" component={Contact} />
+        <Route path="/help" component={Help} />
+        <Route path="/privacy-policy" component={PrivacyPolicy} />
         <Route path="/settings" component={Settings} />
         <Route component={NotFound} />
       </Switch>
