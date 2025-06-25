@@ -62,6 +62,12 @@ app.use((req, res, next) => {
     process.exit(1);
   }
 
+  // Servir le fichier ads.txt statique AVANT les autres routes
+  app.get('/ads.txt', (req, res) => {
+    res.setHeader('Content-Type', 'text/plain');
+    res.sendFile('Ads.txt', { root: process.cwd() });
+  });
+
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
@@ -80,11 +86,6 @@ app.use((req, res, next) => {
   } else {
     serveStatic(app);
   }
-  // Redirection ads.txt pour Ezoic
-  app.get('/ads.txt', (req, res) => {
-    const domain = req.get('host')?.split(':')[0] || 'mathsolverci.site';
-    res.redirect(301, `https://srv.adstxtmanager.com/19390/${domain}`);
-  });
 
   // ALWAYS serve the app on port 5000
   // this serves both the API and the client.
