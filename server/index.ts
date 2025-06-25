@@ -62,10 +62,9 @@ app.use((req, res, next) => {
     process.exit(1);
   }
 
-  // Servir le fichier ads.txt statique AVANT les autres routes
+  // Redirection ads.txt vers Ezoic Ads.txt Manager
   app.get('/ads.txt', (req, res) => {
-    res.setHeader('Content-Type', 'text/plain');
-    res.sendFile('Ads.txt', { root: process.cwd() });
+    res.redirect(301, 'https://srv.adstxtmanager.com/75863/mathsolverci.site');
   });
 
   const server = await registerRoutes(app);
