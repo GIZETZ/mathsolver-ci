@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useLocation } from "wouter";
+import { X, Home, Calculator, History, User, Settings, HelpCircle, Sun, Moon, Info, Mail, Shield } from "lucide-react";
 
 interface User {
   id: string;
@@ -22,7 +23,7 @@ interface SideMenuProps {
 export default function SideMenu({ isOpen, onClose, isDarkMode, onToggleTheme }: SideMenuProps) {
   const { user } = useAuth();
   const [location, setLocation] = useLocation();
-  
+
   // Type assertion to help TypeScript understand the user object structure
   const typedUser = user as User | undefined;
 
@@ -65,7 +66,7 @@ export default function SideMenu({ isOpen, onClose, isDarkMode, onToggleTheme }:
             <i className="fas fa-times text-gray-600 dark:text-gray-400"></i>
           </Button>
         </div>
-        
+
         <div className="flex items-center space-x-3">
           <div className="w-12 h-12 bg-gradient-to-br from-ivorian-orange to-ivorian-green rounded-full flex items-center justify-center">
             <span className="text-white font-bold text-lg">
@@ -82,7 +83,7 @@ export default function SideMenu({ isOpen, onClose, isDarkMode, onToggleTheme }:
           </div>
         </div>
       </div>
-      
+
       {/* Navigation Items */}
       <div className="py-4">
         {menuItems.map((item) => (
@@ -99,7 +100,7 @@ export default function SideMenu({ isOpen, onClose, isDarkMode, onToggleTheme }:
             <span>{item.label}</span>
           </button>
         ))}
-        
+
         <div className="border-t border-gray-200 dark:border-gray-700 mt-4 pt-4">
           <div className="mb-4">
             <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider px-6 mb-2">
@@ -120,7 +121,7 @@ export default function SideMenu({ isOpen, onClose, isDarkMode, onToggleTheme }:
               </button>
             ))}
           </div>
-          
+
           <button
             onClick={onToggleTheme}
             className="flex items-center space-x-3 w-full px-6 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-smooth"
@@ -128,7 +129,7 @@ export default function SideMenu({ isOpen, onClose, isDarkMode, onToggleTheme }:
             <i className={`fas ${isDarkMode ? 'fa-sun' : 'fa-moon'} w-5 text-center`}></i>
             <span>Mode {isDarkMode ? 'clair' : 'sombre'}</span>
           </button>
-          
+
           <button
             onClick={handleLogout}
             className="flex items-center space-x-3 w-full px-6 py-3 text-red-600 hover:bg-red-50 dark:hover:bg-red-900 dark:hover:bg-opacity-20 transition-smooth"
@@ -138,7 +139,7 @@ export default function SideMenu({ isOpen, onClose, isDarkMode, onToggleTheme }:
           </button>
         </div>
       </div>
-      
+
       {/* Footer Status */}
       <div className="absolute bottom-6 left-6 right-6">
         <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-4 text-center">
