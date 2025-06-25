@@ -38,6 +38,7 @@ export default function SideMenu({ isOpen, onClose, isDarkMode, onToggleTheme }:
     { path: "/about", icon: "fas fa-info-circle", label: "En savoir plus" },
     { path: "/help", icon: "fas fa-question-circle", label: "Aide" },
     { path: "/contact", icon: "fas fa-envelope", label: "Contact" },
+    { path: "/privacy-policy", icon: "fas fa-shield-alt", label: "Confidentialité" },
   ];
 
   const handleNavigation = (path: string) => {
