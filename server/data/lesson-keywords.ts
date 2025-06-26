@@ -105,7 +105,7 @@ export const LESSON_KEYWORDS: LessonKeywords[] = [
       "forme algébrique", "conjugué", "a+ib", "partie réelle", "partie imaginaire",
       "Re(z)", "Im(z)", "nombre complexe", "complexe", "z=", "mettre sous forme",
       "division complexe", "quotient complexe", "simplifier", "calculer", "opérations",
-      "i", "imaginaire", "C", "ensemble C", "z²", "équation complexe"
+      "i", "imaginaire", "C", "ensemble C", "z²", "équation complexe", "nombres complexes"
     ],
     contextKeywords: [
       "mettre sous forme algébrique", "conjugué", "partie réelle", "partie imaginaire",
