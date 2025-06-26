@@ -5,11 +5,14 @@ import { setupVite, serveStatic, log } from "./vite";
 // Vérification des variables d'environnement critiques au démarrage
 function checkEnvironmentVariables() {
   const requiredVars = ['OPENAI_API_KEY'];
-  const missingVars = requiredVars.filter(varName => !process.env[varName]);
+  const optionalVars = ['OPENAI_API_KEY_2', 'OPENAI_API_KEY_3', 'OPENAI_API_KEY_4'];
   
-  if (missingVars.length > 0) {
-    console.error('🚨 ERREUR: Variables d\'environnement manquantes:');
-    missingVars.forEach(varName => {
+  const missingRequired = requiredVars.filter(varName => !process.env[varName]);
+  const availableOptional = optionalVars.filter(varName => process.env[varName]);
+  
+  if (missingRequired.length > 0) {
+    console.error('🚨 ERREUR: Variables d\'environnement critiques manquantes:');
+    missingRequired.forEach(varName => {
       console.error(`   - ${varName}`);
     });
     console.error('ℹ️  Ajoutez ces variables dans votre configuration Render.com');
@@ -17,6 +20,15 @@ function checkEnvironmentVariables() {
   }
   
   console.log('✅ Variables d\'environnement OK');
+  console.log(`🤖 Système multi-IA: ${1 + availableOptional.length}/4 IA configurées`);
+  
+  if (availableOptional.length < 3) {
+    console.warn('⚠️  Pour un système multi-IA complet, configurez les 4 clés API');
+    console.warn('   OPENAI_API_KEY_2, OPENAI_API_KEY_3, OPENAI_API_KEY_4');
+  } else {
+    console.log('🎉 Système multi-IA complet activé !');
+  }
+  
   return true;
 }
 
