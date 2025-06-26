@@ -20,6 +20,26 @@ if (API_KEYS.length < 4) {
   console.log(`✅ ${API_KEYS.length} clés API configurées - Système multi-IA activé`);
 }
 
+// Cache pour les analyses répétitives
+const lessonCache = new Map<string, any>();
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+// Système de performance monitoring
+interface PerformanceMetrics {
+  startTime: number;
+  ai1Time?: number;
+  ai2Time?: number;
+  ai3Time?: number;
+  totalTime?: number;
+  cacheHit?: boolean;
+}
+
+// Mode rapide pour les exercices simples
+const FAST_MODE_KEYWORDS = [
+  'équation simple', 'calcul direct', 'application directe',
+  'définition', 'formule basique', 'x =', 'résoudre'
+];
+
 // Rôles spécialisés des IA
 const AI_ROLES = {
   SOLVER: 0,      // API 1 - Résolution initiale
@@ -101,6 +121,16 @@ export interface SolutionStructure {
     lessonCorrect: boolean;
     correctionsMade: boolean;
     qualityScore: number;
+  };
+  processingMode?: 'fast' | 'complete';
+  fromCache?: boolean;
+  performanceMetrics?: {
+    startTime: number;
+    ai1Time?: number;
+    ai2Time?: number;
+    ai3Time?: number;
+    totalTime?: number;
+    cacheHit?: boolean;
   };
 }
 
@@ -332,52 +362,124 @@ Réponds de manière claire et pédagogique en français.
     };
   }
 
-  // Système principal avec boucle de validation
+  // Système principal avec optimisations de performance
   async generateSolution(situationText: string, analysis: SituationAnalysis): Promise<SolutionStructure> {
+    const metrics: PerformanceMetrics = { startTime: Date.now() };
+    
+    // Cache check
+    const cacheKey = `${situationText.substring(0, 100)}_${analysis.lessonDetected}`;
+    const cached = lessonCache.get(cacheKey);
+    if (cached && (Date.now() - cached.timestamp < CACHE_DURATION)) {
+      console.log('⚡ Solution trouvée en cache - Temps: <100ms');
+      metrics.cacheHit = true;
+      return { ...cached.solution, fromCache: true };
+    }
+
+    // Mode rapide pour exercices simples
+    const isFastMode = FAST_MODE_KEYWORDS.some(keyword => 
+      situationText.toLowerCase().includes(keyword.toLowerCase())
+    );
+
+    if (isFastMode && API_KEYS.length >= 2) {
+      console.log('⚡ Mode rapide activé - Traitement simplifié...');
+      return await this.generateFastSolution(situationText, analysis, metrics);
+    }
+
+    // Mode complet multi-IA
+    console.log('🚀 Mode complet multi-IA activé...');
+    return await this.generateCompleteSolution(situationText, analysis, metrics);
+  }
+
+  // Mode rapide (IA-1 + IA-3 seulement)
+  private async generateFastSolution(
+    situationText: string, 
+    analysis: SituationAnalysis, 
+    metrics: PerformanceMetrics
+  ): Promise<SolutionStructure> {
+    // IA-1: Résolution
+    const ai1Start = Date.now();
+    const solution = await this.solveWithAI1(situationText, analysis);
+    metrics.ai1Time = Date.now() - ai1Start;
+
+    // IA-3: Correction rapide
+    const ai3Start = Date.now();
+    const finalSolution = await this.correctWithAI3(situationText, solution);
+    metrics.ai3Time = Date.now() - ai3Start;
+
+    metrics.totalTime = Date.now() - metrics.startTime;
+    console.log(`⚡ Mode rapide terminé en ${metrics.totalTime}ms`);
+
+    // Cache la solution
+    const cacheKey = `${situationText.substring(0, 100)}_${analysis.lessonDetected}`;
+    lessonCache.set(cacheKey, {
+      solution: finalSolution,
+      timestamp: Date.now()
+    });
+
+    finalSolution.processingMode = 'fast';
+    return finalSolution;
+  }
+
+  // Mode complet (toutes les IA)
+  private async generateCompleteSolution(
+    situationText: string, 
+    analysis: SituationAnalysis, 
+    metrics: PerformanceMetrics
+  ): Promise<SolutionStructure> {
     let attempts = 0;
     const maxAttempts = 3;
     let finalSolution: SolutionStructure;
-
-    console.log('🚀 Démarrage du système multi-IA...');
 
     do {
       attempts++;
       console.log(`\n--- Tentative ${attempts}/${maxAttempts} ---`);
 
       // IA-1: Résolution initiale
+      const ai1Start = Date.now();
       finalSolution = await this.solveWithAI1(situationText, analysis);
+      metrics.ai1Time = Date.now() - ai1Start;
 
       // IA-2: Validation de la leçon
+      const ai2Start = Date.now();
       const validation = await this.validateWithAI2(situationText, finalSolution, analysis);
+      metrics.ai2Time = Date.now() - ai2Start;
       
       console.log(`✅ IA-2 Validation: ${validation.isValid ? 'APPROUVÉE' : 'REJETÉE'}`);
-      console.log(`📝 Feedback: ${validation.feedback}`);
 
       if (validation.isValid) {
         console.log('✅ Leçon validée, passage à la correction...');
         break;
       } else if (validation.suggestedLesson && attempts < maxAttempts) {
         console.log(`🔄 Nouvelle leçon suggérée: ${validation.suggestedLesson}`);
-        // Mettre à jour l'analyse avec la leçon suggérée
         analysis.lessonDetected = validation.suggestedLesson;
         analysis.toolsSuggested = getToolsForLesson(validation.suggestedLesson);
-        analysis.validationAttempts = attempts;
       }
 
     } while (attempts < maxAttempts);
 
     // IA-3: Correction finale
-    console.log('🔧 IA-3: Correction des erreurs...');
+    const ai3Start = Date.now();
     finalSolution = await this.correctWithAI3(situationText, finalSolution);
+    metrics.ai3Time = Date.now() - ai3Start;
 
-    // Marquer les informations de validation
+    metrics.totalTime = Date.now() - metrics.startTime;
+    console.log(`🎉 Mode complet terminé en ${metrics.totalTime}ms`);
+
+    // Cache la solution
+    const cacheKey = `${situationText.substring(0, 100)}_${analysis.lessonDetected}`;
+    lessonCache.set(cacheKey, {
+      solution: finalSolution,
+      timestamp: Date.now()
+    });
+
     finalSolution.validationResult = {
       lessonCorrect: attempts <= maxAttempts,
       correctionsMade: true,
       qualityScore: Math.max(0.7, 1 - (attempts - 1) * 0.15)
     };
 
-    console.log('🎉 Solution multi-IA finalisée !');
+    finalSolution.processingMode = 'complete';
+    finalSolution.performanceMetrics = metrics;
     return finalSolution;
   }
 
