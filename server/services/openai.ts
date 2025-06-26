@@ -5,19 +5,51 @@ import { COMPLEX_SITUATIONS } from "../data/situations";
 import { getAllExampleSolutions as getEnrichedExamples, getExampleByLessonId } from "../data/examples-enriched";
 import { identifyLessonFromText, getToolsForLesson } from "../data/lesson-keywords";
 
-// Vérifier la présence de la clé API
-if (!process.env.OPENAI_API_KEY) {
-  console.error('ERREUR: OPENAI_API_KEY manquante dans les variables d\'environnement');
+// Configuration multi-clés API OpenRouter
+const API_KEYS = [
+  process.env.OPENAI_API_KEY,
+  process.env.OPENAI_API_KEY_2,
+  process.env.OPENAI_API_KEY_3,
+  process.env.OPENAI_API_KEY_4
+].filter(key => key && key.trim() !== '');
+
+if (API_KEYS.length === 0) {
+  console.error('ERREUR: Aucune clé API OpenRouter configurée');
+  console.error('Configurez au moins OPENAI_API_KEY dans les variables d\'environnement');
 }
 
-const openai = new OpenAI({ 
-  apiKey: process.env.OPENAI_API_KEY || '',
-  baseURL: "https://openrouter.ai/api/v1",
-  defaultHeaders: {
-    "HTTP-Referer": "https://mathsolver-ci.onrender.com",
-    "X-Title": "MathSolver CI"
+console.log(`✅ ${API_KEYS.length} clé(s) API OpenRouter configurée(s)`);
+
+// Index de rotation des clés
+let currentKeyIndex = 0;
+
+// Fonction pour obtenir la prochaine clé API
+function getNextApiKey(): string {
+  if (API_KEYS.length === 0) {
+    throw new Error('Aucune clé API disponible');
   }
-});
+  
+  const key = API_KEYS[currentKeyIndex];
+  currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
+  
+  console.log(`🔄 Utilisation de la clé API ${currentKeyIndex + 1}/${API_KEYS.length}`);
+  return key;
+}
+
+// Fonction pour créer un client OpenAI avec une clé spécifique
+function createOpenAIClient(apiKey: string): OpenAI {
+  return new OpenAI({ 
+    apiKey,
+    baseURL: "https://openrouter.ai/api/v1",
+    defaultHeaders: {
+      "HTTP-Referer": "https://mathsolver-ci.onrender.com",
+      "X-Title": "MathSolver CI"
+    }
+  });
+}
+
+// Client OpenAI par défaut avec la première clé
+const openai = createOpenAIClient(API_KEYS[0] || '');
 
 export interface SituationAnalysis {
   lessonDetected: string;
@@ -64,6 +96,45 @@ export interface EvaluationCriteria {
 export class MathResolver {
   // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
   private model = "openai/gpt-4o-mini";
+
+  // Fonction pour exécuter une requête avec retry et rotation des clés
+  private async executeWithRetry<T>(
+    operation: (client: OpenAI) => Promise<T>,
+    maxRetries: number = API_KEYS.length
+  ): Promise<T> {
+    let lastError: Error | null = null;
+    
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        const apiKey = getNextApiKey();
+        const client = createOpenAIClient(apiKey);
+        
+        console.log(`🚀 Tentative ${attempt + 1}/${maxRetries} avec clé API ${currentKeyIndex}/${API_KEYS.length}`);
+        
+        const result = await operation(client);
+        
+        if (attempt > 0) {
+          console.log(`✅ Succès après ${attempt + 1} tentative(s)`);
+        }
+        
+        return result;
+      } catch (error: any) {
+        lastError = error;
+        console.warn(`⚠️ Échec tentative ${attempt + 1}: ${error.message}`);
+        
+        // Si c'est la dernière tentative, on lance l'erreur
+        if (attempt === maxRetries - 1) {
+          break;
+        }
+        
+        // Attendre un peu avant la prochaine tentative
+        await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
+      }
+    }
+    
+    console.error(`❌ Échec de toutes les tentatives après ${maxRetries} essais`);
+    throw lastError || new Error('Toutes les clés API ont échoué');
+  }
 
   async analyzeSituation(situationText: string): Promise<SituationAnalysis> {
     // Utiliser le système d'identification intelligent basé sur les mots-clés des exemples
@@ -115,27 +186,29 @@ export class MathResolver {
         throw new Error('Données d\'image trop courtes. Veuillez fournir une image valide.');
       }
 
-      const response = await openai.chat.completions.create({
-        model: this.model,
-        messages: [
-          {
-            role: "user",
-            content: [
-              {
-                type: "text",
-                text: `Extrait le texte exact de cette image d'exercice de mathématiques en ${language}. Conserve la mise en forme et les formules mathématiques. Réponds uniquement avec le texte extrait, sans commentaires additionnels.`
-              },
-              {
-                type: "image_url",
-                image_url: {
-                  url: imageBase64
+      const response = await this.executeWithRetry(async (client) => {
+        return await client.chat.completions.create({
+          model: this.model,
+          messages: [
+            {
+              role: "user",
+              content: [
+                {
+                  type: "text",
+                  text: `Extrait le texte exact de cette image d'exercice de mathématiques en ${language}. Conserve la mise en forme et les formules mathématiques. Réponds uniquement avec le texte extrait, sans commentaires additionnels.`
+                },
+                {
+                  type: "image_url",
+                  image_url: {
+                    url: imageBase64
+                  }
                 }
-              }
-            ]
-          }
-        ],
-        max_tokens: 1500,
-        temperature: 0.1
+              ]
+            }
+          ],
+          max_tokens: 1500,
+          temperature: 0.1
+        });
       });
 
       const extractedText = response.choices[0]?.message?.content || '';
@@ -284,12 +357,14 @@ Réponds en JSON avec cette structure:
 `;
 
     try {
-      const response = await openai.chat.completions.create({
-        model: this.model,
-        messages: [{ role: "user", content: prompt }],
-        response_format: { type: "json_object" },
-        temperature: 0.3,
-        max_tokens: 4000,
+      const response = await this.executeWithRetry(async (client) => {
+        return await client.chat.completions.create({
+          model: this.model,
+          messages: [{ role: "user", content: prompt }],
+          response_format: { type: "json_object" },
+          temperature: 0.3,
+          max_tokens: 4000,
+        });
       });
 
       const result = JSON.parse(response.choices[0].message.content || "{}");
@@ -405,32 +480,17 @@ Réponds en JSON avec cette structure :
 `;
 
     try {
-      // Test direct avec fetch si OpenAI SDK échoue
-      const apiResponse = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
-          "Content-Type": "application/json",
-          "HTTP-Referer": "https://mathsolver-ci.onrender.com",
-          "X-Title": "MathSolver CI"
-        },
-        body: JSON.stringify({
+      const response = await this.executeWithRetry(async (client) => {
+        return await client.chat.completions.create({
           model: this.model,
           messages: [{ role: "user", content: prompt }],
           response_format: { type: "json_object" },
           temperature: 0.3,
           max_tokens: 4000
-        })
+        });
       });
 
-      if (!apiResponse.ok) {
-        const errorText = await apiResponse.text();
-        console.error("OpenRouter API Error:", apiResponse.status, errorText);
-        throw new Error(`API Error ${apiResponse.status}: ${errorText}`);
-      }
-
-      const apiData = await apiResponse.json();
-      const result = JSON.parse(apiData.choices[0].message.content || "{}");
+      const result = JSON.parse(response.choices[0].message.content || "{}");
       return result as SolutionStructure;
     } catch (error) {
       console.error("Error generating solution:", error);
@@ -473,11 +533,13 @@ Réponds en JSON avec cette structure :
 `;
 
     try {
-      const response = await openai.chat.completions.create({
-        model: this.model,
-        messages: [{ role: "user", content: prompt }],
-        response_format: { type: "json_object" },
-        temperature: 0.2,
+      const response = await this.executeWithRetry(async (client) => {
+        return await client.chat.completions.create({
+          model: this.model,
+          messages: [{ role: "user", content: prompt }],
+          response_format: { type: "json_object" },
+          temperature: 0.2,
+        });
       });
 
       const result = JSON.parse(response.choices[0].message.content || "{}");
