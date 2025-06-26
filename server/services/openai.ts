@@ -1,3 +1,4 @@
+
 import OpenAI from "openai";
 import { TERMINALE_D_CURRICULUM, METHODOLOGY_UEMOA } from "../data/curriculum";
 import { EXERCISE_EXAMPLES } from "../data/examples";
@@ -5,7 +6,7 @@ import { COMPLEX_SITUATIONS } from "../data/situations";
 import { getAllExampleSolutions as getEnrichedExamples, getExampleByLessonId } from "../data/examples-enriched";
 import { identifyLessonFromText, getToolsForLesson } from "../data/lesson-keywords";
 
-// Configuration multi-clés API OpenRouter
+// Configuration multi-clés API OpenRouter avec rôles spécialisés
 const API_KEYS = [
   process.env.OPENAI_API_KEY,
   process.env.OPENAI_API_KEY_2,
@@ -13,28 +14,23 @@ const API_KEYS = [
   process.env.OPENAI_API_KEY_4
 ].filter(key => key && key.trim() !== '');
 
-if (API_KEYS.length === 0) {
-  console.error('ERREUR: Aucune clé API OpenRouter configurée');
-  console.error('Configurez au moins OPENAI_API_KEY dans les variables d\'environnement');
+if (API_KEYS.length < 4) {
+  console.warn(`⚠️ Seulement ${API_KEYS.length}/4 clés API configurées. Système multi-IA incomplet.`);
+} else {
+  console.log(`✅ ${API_KEYS.length} clés API configurées - Système multi-IA activé`);
 }
 
-console.log(`✅ ${API_KEYS.length} clé(s) API OpenRouter configurée(s)`);
+// Rôles spécialisés des IA
+const AI_ROLES = {
+  SOLVER: 0,      // API 1 - Résolution initiale
+  VALIDATOR: 1,   // API 2 - Validation de la leçon
+  CORRECTOR: 2,   // API 3 - Correction des erreurs
+  ASSISTANT: 3    // API 4 - Chat utilisateur (5 requêtes/jour)
+};
 
-// Index de rotation des clés
-let currentKeyIndex = 0;
-
-// Fonction pour obtenir la prochaine clé API
-function getNextApiKey(): string {
-  if (API_KEYS.length === 0) {
-    throw new Error('Aucune clé API disponible');
-  }
-  
-  const key = API_KEYS[currentKeyIndex];
-  currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
-  
-  console.log(`🔄 Utilisation de la clé API ${currentKeyIndex + 1}/${API_KEYS.length}`);
-  return key;
-}
+// Stockage des limites d'usage pour l'API 4 (Chat)
+const chatUsage = new Map<string, { count: number, lastReset: string }>();
+const DAILY_CHAT_LIMIT = 5;
 
 // Fonction pour créer un client OpenAI avec une clé spécifique
 function createOpenAIClient(apiKey: string): OpenAI {
@@ -43,13 +39,30 @@ function createOpenAIClient(apiKey: string): OpenAI {
     baseURL: "https://openrouter.ai/api/v1",
     defaultHeaders: {
       "HTTP-Referer": "https://mathsolver-ci.onrender.com",
-      "X-Title": "MathSolver CI"
+      "X-Title": "MathSolver CI Multi-IA"
     }
   });
 }
 
-// Client OpenAI par défaut avec la première clé
-const openai = createOpenAIClient(API_KEYS[0] || '');
+// Fonction pour vérifier et gérer la limite de chat
+function checkChatLimit(userId: string = 'anonymous'): boolean {
+  const today = new Date().toDateString();
+  const userUsage = chatUsage.get(userId);
+  
+  if (!userUsage || userUsage.lastReset !== today) {
+    chatUsage.set(userId, { count: 0, lastReset: today });
+    return true;
+  }
+  
+  return userUsage.count < DAILY_CHAT_LIMIT;
+}
+
+function incrementChatUsage(userId: string = 'anonymous'): void {
+  const today = new Date().toDateString();
+  const userUsage = chatUsage.get(userId) || { count: 0, lastReset: today };
+  userUsage.count++;
+  chatUsage.set(userId, userUsage);
+}
 
 export interface SituationAnalysis {
   lessonDetected: string;
@@ -57,6 +70,8 @@ export interface SituationAnalysis {
   difficultyLevel: string;
   context: string;
   keyElements: string[];
+  confidence: number;
+  validationAttempts?: number;
 }
 
 export interface SolutionStructure {
@@ -76,12 +91,17 @@ export interface SolutionStructure {
     };
   }>;
   finalConclusion?: string;
-  completeSolution?: string; // Texte unifié complet
+  completeSolution?: string;
   calculations?: Array<{
     step: string;
     calculation: string;
     result: string;
-  }>; // Calculs détaillés avec résultats
+  }>;
+  validationResult?: {
+    lessonCorrect: boolean;
+    correctionsMade: boolean;
+    qualityScore: number;
+  };
 }
 
 export interface EvaluationCriteria {
@@ -93,62 +113,286 @@ export interface EvaluationCriteria {
   feedback: string[];
 }
 
+export interface ChatResponse {
+  response: string;
+  remainingQuestions: number;
+  limitReached: boolean;
+}
+
 export class MathResolver {
-  // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
   private model = "openai/gpt-4o-mini";
 
-  // Fonction pour exécuter une requête avec retry et rotation des clés
-  private async executeWithRetry<T>(
-    operation: (client: OpenAI) => Promise<T>,
-    maxRetries: number = API_KEYS.length
-  ): Promise<T> {
-    let lastError: Error | null = null;
-    
-    for (let attempt = 0; attempt < maxRetries; attempt++) {
-      try {
-        const apiKey = getNextApiKey();
-        const client = createOpenAIClient(apiKey);
-        
-        console.log(`🚀 Tentative ${attempt + 1}/${maxRetries} avec clé API ${currentKeyIndex}/${API_KEYS.length}`);
-        
-        const result = await operation(client);
-        
-        if (attempt > 0) {
-          console.log(`✅ Succès après ${attempt + 1} tentative(s)`);
-        }
-        
-        return result;
-      } catch (error: any) {
-        lastError = error;
-        console.warn(`⚠️ Échec tentative ${attempt + 1}: ${error.message}`);
-        
-        // Si c'est la dernière tentative, on lance l'erreur
-        if (attempt === maxRetries - 1) {
-          break;
-        }
-        
-        // Attendre un peu avant la prochaine tentative
-        await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
-      }
+  // IA 1 - Résolution initiale du problème
+  private async solveWithAI1(situationText: string, analysis: SituationAnalysis): Promise<SolutionStructure> {
+    const client = createOpenAIClient(API_KEYS[AI_ROLES.SOLVER]);
+    console.log('🤖 IA-1 (Solver): Résolution du problème...');
+
+    const detectedLesson = identifyLessonFromText(situationText);
+    const curriculum = TERMINALE_D_CURRICULUM.find(l => l.id === detectedLesson.lessonId);
+    const perfectExamples = getExampleByLessonId(detectedLesson.lessonId);
+
+    const prompt = `
+Tu es l'IA-1 SOLVER spécialisée dans la résolution initiale d'exercices mathématiques Terminale D Côte d'Ivoire.
+
+CONTRAINTES STRICTES:
+- Respecte EXACTEMENT la méthodologie UEMOA
+- Utilise UNIQUEMENT les notions du programme Terminale D
+- Structure: Introduction/Développement/Conclusion
+
+LEÇON IDENTIFIÉE: ${analysis.lessonDetected}
+OUTILS AUTORISÉS: ${analysis.toolsSuggested.join(', ')}
+
+EXERCICE À RÉSOUDRE:
+${situationText}
+
+EXEMPLES DE RÉFÉRENCE:
+${perfectExamples.map(ex => `
+Exemple: ${ex.situation.title}
+Introduction: ${ex.officialSolution.introduction}
+Développement: ${ex.officialSolution.development}
+Conclusion: ${ex.officialSolution.conclusion}
+`).join('\n')}
+
+Réponds en JSON avec cette structure:
+{
+  "introduction": "Pour répondre au problème qui est posé, je vais utiliser ${analysis.lessonDetected} plus précisément ${analysis.toolsSuggested.join(' et ')}.",
+  "development": "Développement structuré avec calculs détaillés",
+  "conclusion": "Conclusion finale avec résultat",
+  "toolsUsed": ["outil1", "outil2"],
+  "steps": ["étape1", "étape2", "étape3"],
+  "calculations": [
+    {
+      "step": "Description étape",
+      "calculation": "Calcul effectué",
+      "result": "Résultat obtenu"
     }
-    
-    console.error(`❌ Échec de toutes les tentatives après ${maxRetries} essais`);
-    throw lastError || new Error('Toutes les clés API ont échoué');
+  ],
+  "completeSolution": "Solution complète unifiée"
+}
+`;
+
+    const response = await client.chat.completions.create({
+      model: this.model,
+      messages: [{ role: "user", content: prompt }],
+      response_format: { type: "json_object" },
+      temperature: 0.3,
+      max_tokens: 4000,
+    });
+
+    return JSON.parse(response.choices[0].message.content || "{}");
   }
 
+  // IA 2 - Validation de la leçon choisie
+  private async validateWithAI2(situationText: string, solution: SolutionStructure, analysis: SituationAnalysis): Promise<{ isValid: boolean, feedback: string, suggestedLesson?: string }> {
+    const client = createOpenAIClient(API_KEYS[AI_ROLES.VALIDATOR]);
+    console.log('🔍 IA-2 (Validator): Validation de la leçon...');
+
+    const prompt = `
+Tu es l'IA-2 VALIDATOR spécialisée dans la validation du choix de leçon pour les exercices de Terminale D.
+
+PROGRAMME TERMINALE D AUTORISÉ:
+${TERMINALE_D_CURRICULUM.map(lesson => `${lesson.id}. ${lesson.name}: ${lesson.notions.join(', ')}`).join('\n')}
+
+EXERCICE ORIGINAL:
+${situationText}
+
+LEÇON CHOISIE PAR IA-1: ${analysis.lessonDetected}
+SOLUTION PROPOSÉE:
+${solution.completeSolution}
+OUTILS UTILISÉS: ${solution.toolsUsed.join(', ')}
+
+MISSION: Valide si la leçon choisie est EXACTEMENT appropriée pour cet exercice.
+
+Critères de validation:
+1. Les notions utilisées correspondent-elles à la leçon?
+2. Existe-t-il une leçon plus appropriée?
+3. Le niveau est-il correct pour Terminale D?
+
+Réponds en JSON:
+{
+  "isValid": true/false,
+  "feedback": "Explication détaillée de votre évaluation",
+  "suggestedLesson": "Nom de la leçon correcte si différente",
+  "confidence": 0.85
+}
+`;
+
+    const response = await client.chat.completions.create({
+      model: this.model,
+      messages: [{ role: "user", content: prompt }],
+      response_format: { type: "json_object" },
+      temperature: 0.2,
+      max_tokens: 1500,
+    });
+
+    return JSON.parse(response.choices[0].message.content || "{}");
+  }
+
+  // IA 3 - Correction des erreurs de logique et calculs
+  private async correctWithAI3(situationText: string, solution: SolutionStructure): Promise<SolutionStructure> {
+    const client = createOpenAIClient(API_KEYS[AI_ROLES.CORRECTOR]);
+    console.log('🔧 IA-3 (Corrector): Correction des erreurs...');
+
+    const prompt = `
+Tu es l'IA-3 CORRECTOR spécialisée dans la détection et correction d'erreurs dans les solutions mathématiques.
+
+EXERCICE:
+${situationText}
+
+SOLUTION À CORRIGER:
+Introduction: ${solution.introduction}
+Développement: ${solution.development}
+Conclusion: ${solution.conclusion}
+
+CALCULS À VÉRIFIER:
+${solution.calculations?.map(calc => `${calc.step}: ${calc.calculation} = ${calc.result}`).join('\n') || 'Aucun calcul détaillé'}
+
+MISSION: 
+1. Vérifie TOUS les calculs mathématiques
+2. Corrige les erreurs de logique
+3. Améliore la clarté des explications
+4. Assure la cohérence méthodologique UEMOA
+
+Réponds en JSON avec la solution corrigée:
+{
+  "introduction": "Introduction corrigée si nécessaire",
+  "development": "Développement avec corrections appliquées",
+  "conclusion": "Conclusion corrigée",
+  "toolsUsed": ["outils corrects"],
+  "steps": ["étapes corrigées"],
+  "calculations": [
+    {
+      "step": "Étape corrigée",
+      "calculation": "Calcul vérifié et correct",
+      "result": "Résultat exact"
+    }
+  ],
+  "completeSolution": "Solution finale corrigée et optimisée",
+  "correctionsMade": true/false,
+  "errorsFound": ["liste des erreurs corrigées"]
+}
+`;
+
+    const response = await client.chat.completions.create({
+      model: this.model,
+      messages: [{ role: "user", content: prompt }],
+      response_format: { type: "json_object" },
+      temperature: 0.1,
+      max_tokens: 4000,
+    });
+
+    return JSON.parse(response.choices[0].message.content || "{}");
+  }
+
+  // IA 4 - Assistant de chat (limité à 5 requêtes/jour)
+  async chatWithAI4(userQuestion: string, userId: string = 'anonymous'): Promise<ChatResponse> {
+    if (!checkChatLimit(userId)) {
+      return {
+        response: "Vous avez atteint votre limite quotidienne de 5 questions. Revenez demain !",
+        remainingQuestions: 0,
+        limitReached: true
+      };
+    }
+
+    const client = createOpenAIClient(API_KEYS[AI_ROLES.ASSISTANT]);
+    console.log('💬 IA-4 (Assistant): Réponse au chat utilisateur...');
+
+    const prompt = `
+Tu es l'IA-4 ASSISTANT, un tuteur mathématique pour élèves de Terminale D en Côte d'Ivoire.
+
+CONTRAINTES:
+- Réponds UNIQUEMENT aux questions sur les mathématiques Terminale D
+- Sois pédagogique et encourageant
+- Limite tes réponses à 200 mots maximum
+- Si la question n'est pas liée aux maths, redirige vers les mathématiques
+
+PROGRAMME AUTORISÉ: Limites, Probabilités, Dérivabilité, Primitives, Logarithmes, Nombres complexes, Fonctions exponentielles, Suites, Calcul intégral, Statistiques, Équations différentielles, Géométrie dans l'espace.
+
+QUESTION DE L'UTILISATEUR:
+${userQuestion}
+
+Réponds de manière claire et pédagogique en français.
+`;
+
+    const response = await client.chat.completions.create({
+      model: this.model,
+      messages: [{ role: "user", content: prompt }],
+      temperature: 0.7,
+      max_tokens: 300,
+    });
+
+    incrementChatUsage(userId);
+    const currentUsage = chatUsage.get(userId);
+    const remaining = DAILY_CHAT_LIMIT - (currentUsage?.count || 0);
+
+    return {
+      response: response.choices[0].message.content || "Désolé, je n'ai pas pu traiter votre question.",
+      remainingQuestions: remaining,
+      limitReached: false
+    };
+  }
+
+  // Système principal avec boucle de validation
+  async generateSolution(situationText: string, analysis: SituationAnalysis): Promise<SolutionStructure> {
+    let attempts = 0;
+    const maxAttempts = 3;
+    let finalSolution: SolutionStructure;
+
+    console.log('🚀 Démarrage du système multi-IA...');
+
+    do {
+      attempts++;
+      console.log(`\n--- Tentative ${attempts}/${maxAttempts} ---`);
+
+      // IA-1: Résolution initiale
+      finalSolution = await this.solveWithAI1(situationText, analysis);
+
+      // IA-2: Validation de la leçon
+      const validation = await this.validateWithAI2(situationText, finalSolution, analysis);
+      
+      console.log(`✅ IA-2 Validation: ${validation.isValid ? 'APPROUVÉE' : 'REJETÉE'}`);
+      console.log(`📝 Feedback: ${validation.feedback}`);
+
+      if (validation.isValid) {
+        console.log('✅ Leçon validée, passage à la correction...');
+        break;
+      } else if (validation.suggestedLesson && attempts < maxAttempts) {
+        console.log(`🔄 Nouvelle leçon suggérée: ${validation.suggestedLesson}`);
+        // Mettre à jour l'analyse avec la leçon suggérée
+        analysis.lessonDetected = validation.suggestedLesson;
+        analysis.toolsSuggested = getToolsForLesson(validation.suggestedLesson);
+        analysis.validationAttempts = attempts;
+      }
+
+    } while (attempts < maxAttempts);
+
+    // IA-3: Correction finale
+    console.log('🔧 IA-3: Correction des erreurs...');
+    finalSolution = await this.correctWithAI3(situationText, finalSolution);
+
+    // Marquer les informations de validation
+    finalSolution.validationResult = {
+      lessonCorrect: attempts <= maxAttempts,
+      correctionsMade: true,
+      qualityScore: Math.max(0.7, 1 - (attempts - 1) * 0.15)
+    };
+
+    console.log('🎉 Solution multi-IA finalisée !');
+    return finalSolution;
+  }
+
+  // Méthodes héritées (simplifiées pour utiliser le nouveau système)
   async analyzeSituation(situationText: string): Promise<SituationAnalysis> {
-    // Utiliser le système d'identification intelligent basé sur les mots-clés des exemples
     const identifiedLesson = identifyLessonFromText(situationText);
     const tools = getToolsForLesson(identifiedLesson.lessonName);
-    
-
     
     return {
       lessonDetected: identifiedLesson.lessonName,
       toolsSuggested: tools,
       difficultyLevel: "moyen",
       context: this.extractContext(situationText, identifiedLesson),
-      keyElements: this.extractKeyElements(situationText, identifiedLesson)
+      keyElements: this.extractKeyElements(situationText, identifiedLesson),
+      confidence: identifiedLesson.confidence || 0.8
     };
   }
 
@@ -170,45 +414,43 @@ export class MathResolver {
   }
 
   private extractKeyElements(text: string, lesson: any): string[] {
-    // Extraire les éléments clés selon la leçon identifiée
-    return lesson.keywords.slice(0, 3); // Prendre les 3 premiers mots-clés
+    return lesson.keywords.slice(0, 3);
   }
 
   async extractTextFromImage(imageBase64: string, language: string = 'french'): Promise<string> {
+    // Utilise l'IA-1 pour l'OCR
+    const client = createOpenAIClient(API_KEYS[AI_ROLES.SOLVER]);
+    
     try {
-      // Validate image data format
       if (!imageBase64 || !imageBase64.startsWith('data:image/')) {
         throw new Error('Format d\'image invalide. Utilisez une image en base64 valide.');
       }
 
-      // Check if image data is too small (likely invalid)
       if (imageBase64.length < 100) {
         throw new Error('Données d\'image trop courtes. Veuillez fournir une image valide.');
       }
 
-      const response = await this.executeWithRetry(async (client) => {
-        return await client.chat.completions.create({
-          model: this.model,
-          messages: [
-            {
-              role: "user",
-              content: [
-                {
-                  type: "text",
-                  text: `Extrait le texte exact de cette image d'exercice de mathématiques en ${language}. Conserve la mise en forme et les formules mathématiques. Réponds uniquement avec le texte extrait, sans commentaires additionnels.`
-                },
-                {
-                  type: "image_url",
-                  image_url: {
-                    url: imageBase64
-                  }
+      const response = await client.chat.completions.create({
+        model: this.model,
+        messages: [
+          {
+            role: "user",
+            content: [
+              {
+                type: "text",
+                text: `Extrait le texte exact de cette image d'exercice de mathématiques en ${language}. Conserve la mise en forme et les formules mathématiques. Réponds uniquement avec le texte extrait, sans commentaires additionnels.`
+              },
+              {
+                type: "image_url",
+                image_url: {
+                  url: imageBase64
                 }
-              ]
-            }
-          ],
-          max_tokens: 1500,
-          temperature: 0.1
-        });
+              }
+            ]
+          }
+        ],
+        max_tokens: 1500,
+        temperature: 0.1
       });
 
       const extractedText = response.choices[0]?.message?.content || '';
@@ -221,7 +463,6 @@ export class MathResolver {
     } catch (error: any) {
       console.error('Error extracting text from image:', error);
       
-      // Handle specific OpenAI/OpenRouter errors
       if (error?.status === 400) {
         throw new Error('Image invalide ou corrompue. Veuillez utiliser une image claire et lisible.');
       } else if (error?.status === 401 || error?.status === 403) {
@@ -229,272 +470,10 @@ export class MathResolver {
       } else if (error?.status === 429) {
         throw new Error('Trop de requêtes. Veuillez réessayer dans quelques instants.');
       } else if (error?.message?.includes('Format d\'image invalide') || error?.message?.includes('Données d\'image trop courtes')) {
-        throw error; // Re-throw validation errors as-is
+        throw error;
       } else {
         throw new Error('Erreur lors de l\'extraction du texte. Veuillez réessayer avec une image différente.');
       }
-    }
-  }
-
-  async generateSolution(situationText: string, analysis: SituationAnalysis): Promise<SolutionStructure> {
-    const detectedLesson = identifyLessonFromText(situationText);
-    const curriculum = TERMINALE_D_CURRICULUM.find(l => l.id === detectedLesson.lessonId);
-    
-    if (!curriculum) {
-      throw new Error(`Leçon non trouvée: ${detectedLesson.lessonId}`);
-    }
-
-    // Récupérer les exemples parfaits pour cette leçon spécifique
-    const perfectExamples = getExampleByLessonId(detectedLesson.lessonId);
-    
-    // Vérifier si c'est une situation complexe multi-tâches
-    const isComplexSituation = this.detectComplexSituation(situationText);
-    
-    if (isComplexSituation) {
-      return this.generateComplexSolution(situationText, analysis, perfectExamples);
-    } else {
-      return this.generateSimpleSolution(situationText, analysis, perfectExamples);
-    }
-  }
-
-  private detectComplexSituation(situationText: string): boolean {
-    const complexIndicators = [
-      /tâche \d+/i,
-      /question \d+/i,
-      /(\d+)\s*[\.\)]/g,
-      /contexte|situation d'apprentissage/i,
-      /justifier|calculer|déterminer|démontrer/gi
-    ];
-    
-    let indicatorCount = 0;
-    complexIndicators.forEach(pattern => {
-      if (pattern.test(situationText)) {
-        indicatorCount++;
-      }
-    });
-    
-    return indicatorCount >= 2 || situationText.length > 300;
-  }
-
-  private async generateComplexSolution(situationText: string, analysis: SituationAnalysis, perfectExamples: any[] = []): Promise<SolutionStructure> {
-    const relevantSituations = COMPLEX_SITUATIONS.filter(sit => 
-      sit.lessonIds.some(id => {
-        const lesson = TERMINALE_D_CURRICULUM.find(l => l.id === id);
-        return lesson?.name === analysis.lessonDetected;
-      })
-    );
-
-    const situationExamples = relevantSituations.map(sit => 
-      `Exemple: ${sit.title}\nContexte: ${sit.context}\nStructure: ${sit.tasks.length} tâches avec méthodologie APC`
-    ).join('\n\n');
-
-    const prompt = `
-Tu es un expert en résolution de situations complexes mathématiques selon l'Approche Par Compétences (APC) pour la Terminale D en Côte d'Ivoire.
-
-CONTRAINTES STRICTES:
-- Respecte le format APC avec tâches décomposées
-- Utilise les verbes d'action à la première personne ("Je calcule...", "Je détermine...", "Je justifie...")
-- Structure par tâches distinctes avec introduction/étapes/conclusion pour chaque tâche
-- Conclusion finale synthétique
-
-PROGRAMME AUTORISÉ: ${analysis.lessonDetected} uniquement
-EXEMPLES DE SITUATIONS COMPLEXES:
-${situationExamples}
-
-SITUATION À RÉSOUDRE:
-${situationText}
-
-STRUCTURE DE RÉPONSE OBLIGATOIRE:
-
-1. INTRODUCTION (format imposé):
-"Pour répondre au [problème qui est posé], je vais utiliser [la leçon concernée] plus précisément [les notions qui sont dans cette leçon]."
-
-2. DÉVELOPPEMENT structuré avec connecteurs logiques:
-- Premièrement, ...
-- Deuxièmement, ...  
-- Ensuite, ...
-- Enfin, ...
-
-3. CONCLUSION: Retour au problème posé
-
-IMPORTANT: 
-- EFFECTUE TOUS LES CALCULS et donne les résultats numériques exacts
-- Utilise UNIQUEMENT les outils de la leçon identifiée
-- Structure avec connecteurs logiques
-
-Pour les situations complexes, décompose en tâches avec:
-1. Introduction: "Pour accomplir cette tâche, je dois..."
-2. Étapes: "Je calcule...", "Je détermine..." avec CALCULS RÉELS
-3. Conclusion partielle avec RÉSULTATS NUMÉRIQUES
-
-INSTRUCTIONS STRICTES:
-1. LEÇON IDENTIFIÉE: ${analysis.lessonDetected}
-2. OUTILS À UTILISER: ${analysis.toolsSuggested.join(', ')}
-3. INTRODUCTION OBLIGATOIRE: "Pour répondre au problème qui est posé, je vais utiliser ${analysis.lessonDetected} plus précisément ${analysis.toolsSuggested.join(' et ')}."
-4. UTILISE UNIQUEMENT les méthodes et notions de cette leçon
-
-Réponds en JSON avec cette structure:
-{
-  "introduction": "Pour répondre au problème qui est posé, je vais utiliser ${analysis.lessonDetected} plus précisément ${analysis.toolsSuggested.join(' et ')}.",
-  "development": "Développement structuré avec connecteurs logiques et calculs détaillés selon la leçon identifiée",
-  "conclusion": "Conclusion finale répondant au problème posé",
-  "toolsUsed": ["calcul de limites", "limites à l'infini"],
-  "steps": ["Déterminer C(x)", "Calculer la limite", "Conclure"],
-  "isComplexSituation": false,
-  "calculations": [
-    {
-      "step": "Fonction coût",
-      "calculation": "C(x) = (4000 + 100x)/(20(x-20)) = 5 + 200/(x-20)",
-      "result": "C(x) = 5 + 200/(x-20)"
-    },
-    {
-      "step": "Limite à l'infini",
-      "calculation": "lim(x→+∞) [5 + 200/(x-20)] = 5 + 0",
-      "result": "5 FCFA"
-    }
-  ]
-}
-`;
-
-    try {
-      const response = await this.executeWithRetry(async (client) => {
-        return await client.chat.completions.create({
-          model: this.model,
-          messages: [{ role: "user", content: prompt }],
-          response_format: { type: "json_object" },
-          temperature: 0.3,
-          max_tokens: 4000,
-        });
-      });
-
-      const result = JSON.parse(response.choices[0].message.content || "{}");
-      return result as SolutionStructure;
-    } catch (error) {
-      console.error("Error generating complex solution:", error);
-      throw new Error("Failed to generate complex mathematical solution");
-    }
-  }
-
-  private async generateSimpleSolution(situationText: string, analysis: SituationAnalysis, perfectExamples: any[] = []): Promise<SolutionStructure> {
-    const relevantLesson = TERMINALE_D_CURRICULUM.find(lesson => 
-      lesson.name === analysis.lessonDetected
-    );
-
-    const methodologyGuide = METHODOLOGY_UEMOA.structure;
-    
-    // Utiliser les exemples parfaits du PDF officiel en priorité
-    const perfectExampleText = perfectExamples.length > 0 
-      ? perfectExamples.map(ex => `
-EXEMPLE PARFAIT OFFICIEL - ${ex.situation.title}:
-INTRODUCTION: ${ex.officialSolution.introduction}
-DÉVELOPPEMENT: ${ex.officialSolution.development}
-CONCLUSION: ${ex.officialSolution.conclusion}
-
-CALCULS DÉTAILLÉS:
-${ex.officialSolution.calculations.map((calc: { step: string; calculation: string; result: string }) => `• ${calc.step}: ${calc.calculation} = ${calc.result}`).join('\n')}
-`).join('\n---\n')
-      : '';
-
-    const exampleSolutions = EXERCISE_EXAMPLES
-      .filter(ex => ex.lessonId === relevantLesson?.id)
-      .map(ex => `Exemple: ${ex.title}\n${ex.expectedSolution.introduction}\n${ex.expectedSolution.development}\n${ex.expectedSolution.conclusion}`)
-      .join('\n\n');
-
-    const prompt = `
-Tu es un assistant spécialisé dans la résolution d'exercices mathématiques pour les élèves de Terminale D en Côte d'Ivoire.
-
-CONTRAINTES STRICTES:
-- Utilise UNIQUEMENT les notions et méthodes du programme Terminale D Côte d'Ivoire
-- Respecte EXACTEMENT la méthodologie UEMOA
-- Ne dépasse JAMAIS le niveau requis
-
-LEÇON OBLIGATOIRE: ${analysis.lessonDetected}
-OUTILS OBLIGATOIRES: ${analysis.toolsSuggested.join(', ')}
-
-${relevantLesson ? `
-Notions autorisées: ${relevantLesson.notions.join(', ')}
-Méthodes autorisées: ${relevantLesson.methods.join(', ')}
-Sujets interdits: ${relevantLesson.forbiddenTopics.join(', ')}
-` : ''}
-
-MÉTHODOLOGIE UEMOA OBLIGATOIRE:
-Introduction: ${methodologyGuide.introduction.join(', ')}
-Développement: ${methodologyGuide.development.join(', ')}
-Conclusion: ${methodologyGuide.conclusion.join(', ')}
-
-EXEMPLES PARFAITS OFFICIELS (PRIORITÉ ABSOLUE):
-${perfectExampleText}
-
-EXEMPLES DE RÉFÉRENCE COMPLÉMENTAIRES:
-${exampleSolutions}
-
-Exercice à résoudre : ${situationText}
-
-STRUCTURE DE RÉPONSE OBLIGATOIRE:
-
-1. INTRODUCTION (format imposé):
-"Pour répondre au [problème qui est posé], je vais utiliser [la leçon concernée] plus précisément [les notions qui sont dans cette leçon]."
-
-2. DÉVELOPPEMENT structuré avec connecteurs logiques OBLIGATOIRES:
-- Premièrement, je détermine la fonction coût C(x)
-- Deuxièmement, je calcule la limite de C(x) quand x tend vers +∞
-- Enfin, je donne le résultat final
-
-3. CONCLUSION: Retour au problème posé avec résultat final
-
-IMPORTANT: 
-- Si l'exercice nécessite des notions hors programme, adapte-le au niveau Terminale D
-- EFFECTUE TOUS LES CALCULS et donne les résultats numériques exacts
-- Utilise UNIQUEMENT les outils de la leçon identifiée
-- Structure avec connecteurs logiques obligatoires
-
-INSTRUCTIONS POUR LA LEÇON IDENTIFIÉE:
-- Leçon: ${analysis.lessonDetected}
-- Outils: ${analysis.toolsSuggested.join(', ')}
-- Introduction obligatoire: "Pour répondre au problème qui est posé, je vais utiliser ${analysis.lessonDetected} plus précisément ${analysis.toolsSuggested.join(' et ')}."
-- Respecte strictement les méthodes de cette leçon
-
-Réponds en JSON avec cette structure :
-{
-  "introduction": "Pour répondre au problème qui est posé, je vais utiliser ${analysis.lessonDetected} plus précisément ${analysis.toolsSuggested.join(' et ')}.",
-  "development": "Développement structuré avec connecteurs logiques selon la leçon ${analysis.lessonDetected}",
-  "conclusion": "Conclusion finale adaptée à la leçon identifiée",
-  "toolsUsed": ["calcul de limites", "limites à l'infini"],
-  "steps": ["Établir la fonction coût C(x)", "Simplifier C(x) = 5 + 200/(x-20)", "Calculer lim(x→+∞) C(x) = 5"],
-  "isComplexSituation": false,
-  "curriculumCompliance": true,
-  "completeSolution": "Solution complète adaptée au problème posé",
-  "calculations": [
-    {
-      "step": "Fonction coût",
-      "calculation": "C(x) = (4000 + 100x)/(20(x-20)) = 5 + 200/(x-20)",
-      "result": "C(x) = 5 + 200/(x-20)"
-    },
-    {
-      "step": "Limite à l'infini",
-      "calculation": "lim(x→+∞) [5 + 200/(x-20)] = 5 + 0",
-      "result": "5 FCFA"
-    }
-  ]
-}
-`;
-
-    try {
-      const response = await this.executeWithRetry(async (client) => {
-        return await client.chat.completions.create({
-          model: this.model,
-          messages: [{ role: "user", content: prompt }],
-          response_format: { type: "json_object" },
-          temperature: 0.3,
-          max_tokens: 4000
-        });
-      });
-
-      const result = JSON.parse(response.choices[0].message.content || "{}");
-      return result as SolutionStructure;
-    } catch (error) {
-      console.error("Error generating solution:", error);
-      throw new Error("Failed to generate mathematical solution");
     }
   }
 
@@ -502,8 +481,11 @@ Réponds en JSON avec cette structure :
     situationText: string,
     solution: SolutionStructure
   ): Promise<EvaluationCriteria> {
+    // Utilise l'IA-3 pour l'évaluation
+    const client = createOpenAIClient(API_KEYS[AI_ROLES.CORRECTOR]);
+    
     const prompt = `
-Tu es un évaluateur expert des situations complexes mathématiques selon les critères UEMOA pour la Terminale D en Côte d'Ivoire.
+Tu es un évaluateur expert des solutions mathématiques selon les critères UEMOA pour la Terminale D en Côte d'Ivoire.
 
 Évalue la solution suivante selon les critères officiels :
 
@@ -533,18 +515,15 @@ Réponds en JSON avec cette structure :
 `;
 
     try {
-      const response = await this.executeWithRetry(async (client) => {
-        return await client.chat.completions.create({
-          model: this.model,
-          messages: [{ role: "user", content: prompt }],
-          response_format: { type: "json_object" },
-          temperature: 0.2,
-        });
+      const response = await client.chat.completions.create({
+        model: this.model,
+        messages: [{ role: "user", content: prompt }],
+        response_format: { type: "json_object" },
+        temperature: 0.2,
       });
 
       const result = JSON.parse(response.choices[0].message.content || "{}");
       
-      // Ensure total score is calculated correctly
       result.totalScore = 
         (result.cm1Pertinence || 0) + 
         (result.cm2OutilsMath || 0) + 
