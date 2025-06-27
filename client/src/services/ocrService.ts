@@ -28,7 +28,7 @@ export interface OcrApiResponse {
  * Configuration de l'API OCR
  */
 const OCR_CONFIG = {
-  apiKey: 'K83790365588957',
+  apiKey: import.meta.env.VITE_OCR_API_KEY || 'K83790365588957',
   baseUrl: 'https://api.ocr.space/parse/image',
   maxFileSize: 1024 * 1024, // 1MB max (limite API OCR.space)
   supportedFormats: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/bmp'],
