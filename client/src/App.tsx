@@ -18,25 +18,18 @@ import Landing from "@/pages/landing";
 import SeoLanding from "@/pages/seo-landing";
 import PrivacyPolicy from "@/pages/privacy-policy";
 
-// Create a client
+// Create a single client instance
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 1,
       refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5, // 5 minutes
     },
   },
 });
 
 function App() {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 1000 * 60 * 5, // 5 minutes
-        refetchOnWindowFocus: false,
-      },
-    },
-  });
 
   // Gérer automatiquement les changements de page pour Ezoic
   useEzoicPageChange();
